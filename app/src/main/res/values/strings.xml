@@ -1,3 +1,8 @@
 <resources>
     <string name="app_name">NotesApp</string>
+    <string name="add_weather_and_location">Add Weather and Location</string>
+    <string name="add_note">Add Note</string>
+    <string name="add_photo">Add Photo</string>
+    <string name="ingresar_comentario_nota">ingresar comentario nota</string>
+    <string name="ingresar_nombre_nota">ingresar nombre nota</string>
 </resources>

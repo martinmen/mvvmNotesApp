@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.AddNoteActivity">
+
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/buttonAddNote"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_below="@+id/buttonAddWeatherLoc"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentEnd="true"
+
+        android:text="@string/add_note"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.023" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/buttonAddPhoto"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_below="@+id/editText_comentario_nota"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentEnd="true"
+
+        android:layout_marginStart="-3dp"
+        android:layout_marginTop="37dp"
+        android:layout_marginEnd="3dp"
+        android:text="@string/add_photo"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.023" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/buttonAddWeatherLoc"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_below="@+id/buttonAddPhoto"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginStart="1dp"
+        android:layout_marginTop="7dp"
+        android:layout_marginEnd="-1dp"
+        android:text="@string/add_weather_and_location"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.023" />
+
+    <androidx.appcompat.widget.AppCompatEditText
+        android:id="@+id/editText_nombre_nota"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:hint="@string/ingresar_nombre_nota" />
+
+    <androidx.appcompat.widget.AppCompatEditText
+        android:id="@+id/editText_comentario_nota"
+        android:layout_width="wrap_content"
+        android:layout_height="227dp"
+        android:layout_below="@+id/editText_nombre_nota"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentEnd="true"
+        android:hint="@string/ingresar_comentario_nota" />
+
+</RelativeLayout>
