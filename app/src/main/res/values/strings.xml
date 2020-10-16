@@ -4,5 +4,9 @@
     <string name="add_note">Save</string>
     <string name="add_photo">Add Photo</string>
     <string name="ingresar_comentario_nota">ingresar comentario nota</string>
-    <string name="ingresar_nombre_nota">ingresar nombre nota</string>
+    <string name="name_must_completed">El campo nombre no debe estar vacio</string>
+    <string name="ingrese_titulo_de_la_nota">Ingrese titulo de la nota</string>
+    <string name="escriba_un_comentario_de_la_nota">Escriba un comentario de la nota</string>
+    <string name="comentario">Comentario</string>
+    <string name="nombre_nota">Nombre nota</string>
 </resources>

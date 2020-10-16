@@ -8,7 +8,7 @@ import ar.com.unlam.notesapp.data.room.NoteDataBase
 import ar.com.unlam.notesapp.data.room.RoomNoteRepository
 
 class NoteViewModelFactory(
-    private val  applicationContext: Context
+    private val applicationContext: Context
 ) : ViewModelProvider.Factory {
 
     override fun <T : ViewModel?> create(modelClass: Class<T>): T {
@@ -20,10 +20,10 @@ class NoteViewModelFactory(
             .allowMainThreadQueries()
             .build()
 
-   val dao = database.noteDao()
+        val dao = database.noteDao()
 
         return NoteViewModel(
             RoomNoteRepository(dao)
-     ) as T
+        ) as T
     }
 }

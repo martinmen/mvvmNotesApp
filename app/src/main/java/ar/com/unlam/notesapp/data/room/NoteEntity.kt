@@ -12,9 +12,12 @@ class NoteEntity (
     @ColumnInfo(name = "id")
     val id:Long = 0,
 
-    @ColumnInfo(name = "nombre")
-    var nombre:String="",
+    @ColumnInfo(name = "titulo")
+    var titulo:String="",
 
     @ColumnInfo(name = "comentario")
-    var comentario:String=""
+    var comentario:String="",
+
+    @ColumnInfo(name = "creationTime")
+    val creationTime: Long?
 )

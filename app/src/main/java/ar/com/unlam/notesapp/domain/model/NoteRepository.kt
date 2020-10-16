@@ -1,12 +1,14 @@
 package ar.com.unlam.notesapp.domain.model
 
-interface NotesRepository {
+interface NoteRepository {
 
     fun addNote(note: Note)
 
     fun getMyNotes(): List<Note>
 
-    fun getNoteById(nombre: String): Note
+    fun getNoteById(idNote: Long): Note
 
     fun updateNote(nota: Note)
+
+    fun deleteNote(nota: Note)
 }

@@ -5,10 +5,10 @@ import androidx.room.RoomDatabase
 
 
 @Database(
-    version = 1,
+    version = 3,
     entities = [NoteEntity::class]
 )
-abstract class NoteDataBase :RoomDatabase(){
+abstract class NoteDataBase : RoomDatabase() {
 
     abstract fun noteDao(): NotesDao
 }

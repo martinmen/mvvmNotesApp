@@ -10,26 +10,33 @@ class NoteViewModel(
 ) : ViewModel() {
 
     val displayNotesListLiveData = MutableLiveData<List<Note>>()
-val notesListLiveData = MutableLiveData<List<Note>>()
+    val notesListLiveData = MutableLiveData<List<Note>>()
     val NoteLiveData = MutableLiveData<Note>()
 
     init {
         notesListLiveData.value = noteRepository.getMyNotes()
     }
-    fun getNotes(){
+
+    fun getNotes() {
         notesListLiveData.value = noteRepository.getMyNotes()
     }
 
-    fun getNoteById(nombre:String){
-        NoteLiveData.value = noteRepository.getNoteById(nombre)
+    fun getNoteById(idNote: Long) {
+        NoteLiveData.value = noteRepository.getNoteById(idNote)
     }
 
-    fun addNote(note : Note){
-        noteRepository.addNote(Note(note.nombre,note.comentario))
+    fun addNote(note: Note) {
+        noteRepository.addNote(Note(titulo = note.titulo, comentario = note.comentario))
         notesListLiveData.value = noteRepository.getMyNotes()
     }
-    fun updateNote(note:Note){
-       noteRepository.updateNote(note)
 
+    fun updateNote(note: Note) {
+        noteRepository.updateNote(note)
     }
+
+    fun deleteNote(note: Note) {
+        noteRepository.deleteNote(note)
+    }
+
+
 }

@@ -8,8 +8,8 @@ import android.view.MenuItem
 import androidx.activity.viewModels
 import androidx.appcompat.widget.SearchView
 import androidx.lifecycle.Observer
+import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
-import ar.com.unlam.notesapp.DetailNoteActivity
 import ar.com.unlam.notesapp.R
 import ar.com.unlam.notesapp.databinding.ActivityMainBinding
 import ar.com.unlam.notesapp.domain.model.Note
@@ -18,13 +18,10 @@ import java.util.*
 class MainActivity : AppCompatActivity() {
 
     private val viewModel: NoteViewModel by viewModels { NoteViewModelFactory(applicationContext) }
-
-    private val displayList: NoteViewModel by viewModels { NoteViewModelFactory(applicationContext) }
-
-
-
     private lateinit var adapter: NoteAdapter
     private lateinit var binding: ActivityMainBinding
+
+    //private val displayList: NoteViewModel by viewModels { NoteViewModelFactory(applicationContext) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -33,14 +30,15 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-
-
         adapter = NoteAdapter { note -> toOnItemViewClick(note) }
         with(binding.rvNoteList) {
+
+            // layoutManager = GridLayoutManager(applicationContext,2,LinearLayoutManager.VERTICAL,false) // Para implementar en con otro estilo
             layoutManager =
                 LinearLayoutManager(this@MainActivity, LinearLayoutManager.VERTICAL, false)
             this.adapter = this@MainActivity.adapter
         }
+
         //Ir a AddNote
         binding.buttonGoAddNote.setOnClickListener {
             val intent: Intent = Intent(this, AddNoteActivity::class.java)
@@ -54,35 +52,35 @@ class MainActivity : AppCompatActivity() {
         })
     }
 
+    // filtro de searchView
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-        menuInflater.inflate(R.menu.main_menu_search,menu)
+        menuInflater.inflate(R.menu.main_menu_search, menu)
         val searhItem = menu!!.findItem(R.id.menu_search)
-        if (searhItem != null){
-        val searView = searhItem.actionView as SearchView
+        if (searhItem != null) {
+            val searView = searhItem.actionView as SearchView
 
-            searView.setOnQueryTextListener(object : SearchView.OnQueryTextListener{
+            searView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
                 override fun onQueryTextSubmit(query: String?): Boolean {
 
-                return true
+                    return true
                 }
 
                 override fun onQueryTextChange(newText: String?): Boolean {
 
-                    if (newText!!.isNotEmpty()){
+                    if (newText!!.isNotEmpty()) {
 
                         val search = newText.toLowerCase(Locale.getDefault())
                         viewModel.notesListLiveData.value?.forEach {
-                            if(it.nombre.toLowerCase(Locale.getDefault()).contains(search)){
-                          displayList.displayNotesListLiveData.value = viewModel.notesListLiveData.value?.filter { it.nombre == search  }
+                            if (it.titulo.toLowerCase(Locale.getDefault()).contains(search)) {
+                                // displayList.displayNotesListLiveData.value = viewModel.notesListLiveData.value?.filter { it.nombre == search  }
                             }
 
                         }
                         adapter.notifyDataSetChanged()
+                    } else {
+
                     }
-                    else{
-                        
-                    }
-                return true
+                    return true
                 }
 
             })
@@ -100,7 +98,7 @@ class MainActivity : AppCompatActivity() {
     //Ir al detalle de la nota seleccionada
     private fun toOnItemViewClick(note: Note) {
         val intent = Intent(this, DetailNoteActivity::class.java)
-        intent.putExtra("nombreNota", note.nombre)
+        intent.putExtra("idNote", note.id)
         startActivity(intent)
     }
 }

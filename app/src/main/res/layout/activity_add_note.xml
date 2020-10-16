@@ -6,14 +6,13 @@
     android:layout_height="match_parent"
     tools:context=".ui.AddNoteActivity">
 
-
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/buttonAddNote"
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:layout_below="@+id/buttonAddWeatherLoc"
         android:layout_alignParentStart="true"
         android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
         android:text="@string/add_note"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -25,13 +24,12 @@
         android:id="@+id/AddImage"
         android:layout_width="wrap_content"
         android:layout_height="244dp"
+        android:layout_below="@+id/editText_comentario_nota"
         android:layout_alignParentStart="true"
-
-        android:layout_alignParentTop="true"
         android:layout_alignParentEnd="true"
-        android:layout_marginStart="0dp"
-        android:layout_marginTop="253dp"
-        android:layout_marginEnd="-3dp"
+        android:layout_marginStart="-2dp"
+        android:layout_marginTop="49dp"
+        android:layout_marginEnd="-1dp"
         android:text="@string/add_photo"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -45,12 +43,9 @@
         android:id="@+id/buttonAddWeatherLoc"
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:layout_below="@+id/AddImage"
+        android:layout_above="@+id/buttonAddNote"
         android:layout_alignParentStart="true"
         android:layout_alignParentEnd="true"
-        android:layout_marginStart="-1dp"
-        android:layout_marginTop="106dp"
-        android:layout_marginEnd="1dp"
         android:text="@string/add_weather_and_location"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -60,7 +55,7 @@
         app:layout_constraintVertical_bias="0.023" />
 
     <androidx.appcompat.widget.AppCompatEditText
-        android:id="@+id/editText_nombre_nota"
+        android:id="@+id/editText_titulo_nota"
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:layout_alignParentStart="true"
@@ -69,20 +64,18 @@
         android:layout_marginStart="-2dp"
         android:layout_marginTop="16dp"
         android:layout_marginEnd="2dp"
-        android:hint="@string/ingresar_nombre_nota" />
+        android:hint="@string/ingrese_titulo_de_la_nota" />
 
     <androidx.appcompat.widget.AppCompatEditText
         android:id="@+id/editText_comentario_nota"
-        android:layout_width="wrap_content"
-        android:layout_height="153dp"
-        android:layout_below="@+id/editText_nombre_nota"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/editText_titulo_nota"
         android:layout_alignParentStart="true"
         android:layout_alignParentEnd="true"
-        android:layout_alignParentBottom="true"
-        android:layout_marginStart="1dp"
+        android:layout_marginStart="0dp"
         android:layout_marginTop="9dp"
         android:layout_marginEnd="-1dp"
-        android:layout_marginBottom="494dp"
         android:hint="@string/ingresar_comentario_nota" />
 
 </RelativeLayout>
