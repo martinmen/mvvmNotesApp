@@ -4,11 +4,8 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.activity.viewModels
-import ar.com.unlam.notesapp.R
 import ar.com.unlam.notesapp.databinding.ActivityAddNoteBinding
-import ar.com.unlam.notesapp.databinding.ActivityMainBinding
-import ar.com.unlam.notesapp.domain.Note
-import kotlinx.android.synthetic.main.activity_add_note.*
+import ar.com.unlam.notesapp.domain.model.Note
 
 class AddNoteActivity : AppCompatActivity() {
 

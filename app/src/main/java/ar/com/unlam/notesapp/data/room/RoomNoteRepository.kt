@@ -1,6 +1,6 @@
 package ar.com.unlam.notesapp.data.room
 
-import ar.com.unlam.notesapp.domain.Note
+import ar.com.unlam.notesapp.domain.model.Note
 import ar.com.unlam.notesapp.domain.model.NotesRepository
 
 class RoomNoteRepository(private val notesDao: NotesDao) : NotesRepository{
@@ -14,6 +14,9 @@ class RoomNoteRepository(private val notesDao: NotesDao) : NotesRepository{
     }
 
     override fun getMyNotes(): List<Note> {
-      return  notesDao.getAll()
+      return  notesDao.getAll().map { Note(it.nombre,it.comentario) }
     }
-}
+
+    override fun getNoteById(nombre:String): Note{
+        return  notesDao.getById(nombre) }
+    }
