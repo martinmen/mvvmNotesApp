@@ -19,4 +19,8 @@ class RoomNoteRepository(private val notesDao: NotesDao) : NotesRepository{
 
     override fun getNoteById(nombre:String): Note{
         return  notesDao.getById(nombre) }
+
+
+    override fun updateNote(nota:Note){
+        return  notesDao.update(nota as NoteEntity) }
     }

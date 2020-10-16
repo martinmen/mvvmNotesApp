@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.Query
+import androidx.room.Update
 import ar.com.unlam.notesapp.domain.model.Note
 
 @Dao
@@ -24,5 +25,6 @@ interface NotesDao {
     @Query("Select * from NOTE where nombre=:nombreNote")
     fun getById(nombreNote:String): Note
 
-   // fun update(note:NoteEntity)
+    @Update
+    fun update(note:NoteEntity)
 }

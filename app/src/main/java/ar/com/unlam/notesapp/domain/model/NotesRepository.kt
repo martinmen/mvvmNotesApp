@@ -7,4 +7,6 @@ interface NotesRepository {
     fun getMyNotes(): List<Note>
 
     fun getNoteById(nombre: String): Note
+
+    fun updateNote(nota: Note)
 }

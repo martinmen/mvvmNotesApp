@@ -9,6 +9,7 @@ class NoteViewModel(
     private val noteRepository: RoomNoteRepository
 ) : ViewModel() {
 
+    val displayNotesListLiveData = MutableLiveData<List<Note>>()
 val notesListLiveData = MutableLiveData<List<Note>>()
     val NoteLiveData = MutableLiveData<Note>()
 
@@ -26,5 +27,9 @@ val notesListLiveData = MutableLiveData<List<Note>>()
     fun addNote(note : Note){
         noteRepository.addNote(Note(note.nombre,note.comentario))
         notesListLiveData.value = noteRepository.getMyNotes()
+    }
+    fun updateNote(note:Note){
+       noteRepository.updateNote(note)
+
     }
 }
