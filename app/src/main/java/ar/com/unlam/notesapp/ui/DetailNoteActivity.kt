@@ -27,7 +27,7 @@ class DetailNoteActivity : AppCompatActivity() {
         val idNote = intent.getLongExtra("idNote", 0)
         idNoteEditable = idNote
         viewModel.getNoteById(idNote!!)
-        viewModel.NoteLiveData.observe(this, Observer {
+        viewModel.noteLiveData.observe(this, Observer {
             binding.texViewTituloNote.text = it.titulo
             binding.texViewComentarioNote.text = it.comentario
             var idNoteToEdit = it.id
@@ -52,9 +52,9 @@ class DetailNoteActivity : AppCompatActivity() {
             }
 
             R.id.item_delete_note -> {
-                viewModel.NoteLiveData.removeObservers(this)
-                viewModel.deleteNote(viewModel.NoteLiveData.value!!)
-                val intent = Intent(this, MainActivity::class.java)
+                viewModel.noteLiveData.removeObservers(this)
+                viewModel.deleteNote(viewModel.noteLiveData.value!!)
+                val intent = Intent(this, NoteActivity::class.java)
                 startActivity(intent)
             }
         }

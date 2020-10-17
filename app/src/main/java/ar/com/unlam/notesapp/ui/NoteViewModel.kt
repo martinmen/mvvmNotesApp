@@ -11,7 +11,7 @@ class NoteViewModel(
 
     val displayNotesListLiveData = MutableLiveData<List<Note>>()
     val notesListLiveData = MutableLiveData<List<Note>>()
-    val NoteLiveData = MutableLiveData<Note>()
+    val noteLiveData = MutableLiveData<Note>()
 
     init {
         notesListLiveData.value = noteRepository.getMyNotes()
@@ -22,7 +22,7 @@ class NoteViewModel(
     }
 
     fun getNoteById(idNote: Long) {
-        NoteLiveData.value = noteRepository.getNoteById(idNote)
+        noteLiveData.value = noteRepository.getNoteById(idNote)
     }
 
     fun addNote(note: Note) {
@@ -32,6 +32,7 @@ class NoteViewModel(
 
     fun updateNote(note: Note) {
         noteRepository.updateNote(note)
+        noteLiveData.value = noteRepository.getNoteById(note.id)
     }
 
     fun deleteNote(note: Note) {

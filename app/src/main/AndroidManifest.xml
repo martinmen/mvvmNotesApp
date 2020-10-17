@@ -11,7 +11,7 @@
         android:theme="@style/AppTheme">
         <activity android:name=".ui.DetailNoteActivity"/>
         <activity android:name=".ui.AddNoteActivity" />
-        <activity android:name=".ui.MainActivity">
+        <activity android:name=".ui.NoteActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

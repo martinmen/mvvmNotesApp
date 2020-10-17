@@ -8,20 +8,17 @@ import android.view.MenuItem
 import androidx.activity.viewModels
 import androidx.appcompat.widget.SearchView
 import androidx.lifecycle.Observer
-import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import ar.com.unlam.notesapp.R
 import ar.com.unlam.notesapp.databinding.ActivityMainBinding
 import ar.com.unlam.notesapp.domain.model.Note
 import java.util.*
 
-class MainActivity : AppCompatActivity() {
+class NoteActivity : AppCompatActivity() {
 
     private val viewModel: NoteViewModel by viewModels { NoteViewModelFactory(applicationContext) }
     private lateinit var adapter: NoteAdapter
     private lateinit var binding: ActivityMainBinding
-
-    //private val displayList: NoteViewModel by viewModels { NoteViewModelFactory(applicationContext) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -35,8 +32,8 @@ class MainActivity : AppCompatActivity() {
 
             // layoutManager = GridLayoutManager(applicationContext,2,LinearLayoutManager.VERTICAL,false) // Para implementar en con otro estilo
             layoutManager =
-                LinearLayoutManager(this@MainActivity, LinearLayoutManager.VERTICAL, false)
-            this.adapter = this@MainActivity.adapter
+                LinearLayoutManager(this@NoteActivity, LinearLayoutManager.VERTICAL, false)
+            this.adapter = this@NoteActivity.adapter
         }
 
         //Ir a AddNote
@@ -52,7 +49,7 @@ class MainActivity : AppCompatActivity() {
         })
     }
 
-    // filtro de searchView
+    // filtro de searchView FALTA IMPLEMENTAR
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.main_menu_search, menu)
         val searhItem = menu!!.findItem(R.id.menu_search)
@@ -61,13 +58,11 @@ class MainActivity : AppCompatActivity() {
 
             searView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
                 override fun onQueryTextSubmit(query: String?): Boolean {
-
                     return true
                 }
 
                 override fun onQueryTextChange(newText: String?): Boolean {
-
-                    if (newText!!.isNotEmpty()) {
+/*                    if (newText!!.isNotEmpty()) {
 
                         val search = newText.toLowerCase(Locale.getDefault())
                         viewModel.notesListLiveData.value?.forEach {
@@ -79,21 +74,17 @@ class MainActivity : AppCompatActivity() {
                         adapter.notifyDataSetChanged()
                     } else {
 
-                    }
+                    }*/
                     return true
                 }
-
             })
-
         }
         return super.onCreateOptionsMenu(menu)
     }
-
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
 
         return super.onOptionsItemSelected(item)
     }
-
 
     //Ir al detalle de la nota seleccionada
     private fun toOnItemViewClick(note: Note) {

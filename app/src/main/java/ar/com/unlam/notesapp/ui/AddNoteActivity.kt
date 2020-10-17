@@ -26,7 +26,7 @@ class AddNoteActivity : AppCompatActivity() {
         if (intent.hasExtra("idNote")) {
             var idNote = intent.getLongExtra("idNote", 0)
             viewModel.getNoteById(idNote!!)
-            viewModel.NoteLiveData.observe(this, Observer {
+            viewModel.noteLiveData.observe(this, Observer {
                 binding.editTextTituloNota.setText(it.titulo)
                 binding.editTextComentarioNota.setText(it.comentario)
                 idNota = it.id
@@ -51,15 +51,15 @@ class AddNoteActivity : AppCompatActivity() {
                     )
                     viewModel.updateNote(note)
 
-                    // this@AddNoteActivity.finish()// si hago esto no me actualiza con lo datos editados
-                    /*No me parece performante pero no me queda otra. Preguntar como y donde se actualizan los viewModel*/
+                     this@AddNoteActivity.finish()// si hago esto no me actualiza con lo datos editados
+                    /*No me parece performante
                     val intent: Intent = Intent(this, DetailNoteActivity::class.java)
                     intent.putExtra("idNote", note.id)
-                    startActivity(intent)
+                    startActivity(intent)*/
 
                 } else {
                     viewModel.addNote(note)
-                    val intent: Intent = Intent(this, MainActivity::class.java)
+                    val intent: Intent = Intent(this, NoteActivity::class.java)
                     startActivity(intent)
                 }
             }
