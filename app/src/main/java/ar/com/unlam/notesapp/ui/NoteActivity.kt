@@ -42,11 +42,15 @@ class NoteActivity : AppCompatActivity() {
             startActivity(intent)
         }
 
-        viewModel.getNotes()
         viewModel.notesListLiveData.observe(this, Observer {
             adapter.submitList(it)
             adapter.notifyDataSetChanged()
         })
+    }
+
+    override fun onStart() {
+        viewModel.getNotes()
+        super.onStart()
     }
 
     // filtro de searchView FALTA IMPLEMENTAR
@@ -81,6 +85,7 @@ class NoteActivity : AppCompatActivity() {
         }
         return super.onCreateOptionsMenu(menu)
     }
+
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
 
         return super.onOptionsItemSelected(item)

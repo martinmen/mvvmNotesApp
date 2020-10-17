@@ -32,7 +32,7 @@ class NoteViewModel(
 
     fun updateNote(note: Note) {
         noteRepository.updateNote(note)
-        noteLiveData.value = noteRepository.getNoteById(note.id)
+      //  noteLiveData.value = noteRepository.getNoteById(note.id)
     }
 
     fun deleteNote(note: Note) {

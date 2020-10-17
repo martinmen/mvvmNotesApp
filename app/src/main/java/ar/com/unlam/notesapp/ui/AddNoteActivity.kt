@@ -50,17 +50,11 @@ class AddNoteActivity : AppCompatActivity() {
                         comentario = binding.editTextComentarioNota.text.toString()
                     )
                     viewModel.updateNote(note)
-
-                     this@AddNoteActivity.finish()// si hago esto no me actualiza con lo datos editados
-                    /*No me parece performante
-                    val intent: Intent = Intent(this, DetailNoteActivity::class.java)
-                    intent.putExtra("idNote", note.id)
-                    startActivity(intent)*/
-
+                    viewModel.getNoteById(idNota!!)
+                     this@AddNoteActivity.finish()
                 } else {
                     viewModel.addNote(note)
-                    val intent: Intent = Intent(this, NoteActivity::class.java)
-                    startActivity(intent)
+                    this@AddNoteActivity.finish()
                 }
             }
         }

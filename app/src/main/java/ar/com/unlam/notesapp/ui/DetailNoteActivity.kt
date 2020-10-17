@@ -27,12 +27,18 @@ class DetailNoteActivity : AppCompatActivity() {
         val idNote = intent.getLongExtra("idNote", 0)
         idNoteEditable = idNote
         viewModel.getNoteById(idNote!!)
+
         viewModel.noteLiveData.observe(this, Observer {
             binding.texViewTituloNote.text = it.titulo
             binding.texViewComentarioNote.text = it.comentario
             var idNoteToEdit = it.id
         })
 
+    }
+
+    override fun onStart() {
+        viewModel.getNoteById(idNoteEditable)
+        super.onStart()
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
