@@ -9,13 +9,15 @@ import androidx.activity.viewModels
 import androidx.lifecycle.Observer
 import ar.com.unlam.notesapp.R
 import ar.com.unlam.notesapp.databinding.ActivityDetailNoteBinding
+import ar.com.unlam.notesapp.ui.viewModels.DetailNoteViewModel
+import ar.com.unlam.notesapp.ui.viewModels.GeneralNoteViewModelFactory
 
 class DetailNoteActivity : AppCompatActivity() {
 
-
+    val nameActivity = "DetailNoteActivity"
     private lateinit var binding: ActivityDetailNoteBinding
     var idNoteEditable: Long = 0
-    private val viewModel: NoteViewModel by viewModels { NoteViewModelFactory(applicationContext) }
+    private val viewModel: DetailNoteViewModel by viewModels { GeneralNoteViewModelFactory(applicationContext,nameActivity) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -26,7 +28,7 @@ class DetailNoteActivity : AppCompatActivity() {
 
         val idNote = intent.getLongExtra("idNote", 0)
         idNoteEditable = idNote
-        viewModel.getNoteById(idNote!!)
+        //viewModel.getNoteById(idNote!!)
 
         viewModel.noteLiveData.observe(this, Observer {
             binding.texViewTituloNote.text = it.titulo

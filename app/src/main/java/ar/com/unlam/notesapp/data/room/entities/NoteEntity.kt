@@ -1,4 +1,4 @@
-package ar.com.unlam.notesapp.data.room
+package ar.com.unlam.notesapp.data.room.entities
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity
@@ -20,4 +20,10 @@ class NoteEntity (
 
     @ColumnInfo(name = "creationTime")
     val creationTime: Long?
+
+  /*  @ColumnInfo(name = "modifidedTime")
+    val modifidedTime: Long?,
+
+    @ColumnInfo(name = "removeTime")
+    val removeTime: Long?*/
 )

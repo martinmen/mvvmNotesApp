@@ -37,9 +37,6 @@ android {
     }
 }
 
-
-
-
 dependencies {
     implementation fileTree(dir: "libs", include: ["*.jar"])
     implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
@@ -52,23 +49,24 @@ dependencies {
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
 
     // Librerias agregadas para el proyecto
+    def picasso_version = "2.71828"
     implementation "androidx.recyclerview:recyclerview:1.1.0"
     implementation "androidx.cardview:cardview:1.0.0"
-    implementation 'com.squareup.picasso:picasso:2.71828'
-
+    implementation "com.squareup.picasso:picasso:$picasso_version"
+    //Retrofit
     def retrofit_version = "2.6.2"
     implementation "com.squareup.retrofit2:converter-gson:$retrofit_version"
     implementation "com.squareup.retrofit2:retrofit:$retrofit_version"
     implementation 'com.squareup.retrofit2:converter-gson:2.6.2'
-
     //View model
-    implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.2.0'
+    def viewModel_version = "2.2.0"
+    implementation"androidx.lifecycle:lifecycle-viewmodel-ktx:$viewModel_version"
     implementation 'androidx.activity:activity-ktx:1.1.0'
-
     // ROOM
     def room_version = "2.2.5"
-
     implementation "androidx.room:room-runtime:$room_version"
     kapt "androidx.room:room-compiler:$room_version"
+    implementation"androidx.room:room-ktx:$room_version" //Integracion con Corutines
+
 
 }

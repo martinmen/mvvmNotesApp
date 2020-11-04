@@ -2,6 +2,7 @@ package ar.com.unlam.notesapp.data.room
 
 import androidx.room.Database
 import androidx.room.RoomDatabase
+import ar.com.unlam.notesapp.data.room.entities.NoteEntity
 
 
 @Database(

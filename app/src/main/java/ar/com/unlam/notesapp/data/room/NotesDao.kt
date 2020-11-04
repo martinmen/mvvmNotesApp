@@ -1,30 +1,34 @@
 package ar.com.unlam.notesapp.data.room
 
-import androidx.lifecycle.LiveData
 import androidx.room.*
+import ar.com.unlam.notesapp.data.room.entities.NoteEntity
 import ar.com.unlam.notesapp.domain.model.Note
 
 @Dao
 interface NotesDao {
 
     @Insert
-    fun addNote(entity: NoteEntity)
+   suspend fun addNote(entity: NoteEntity)
 
+ //@Query("SELECT * FROM NOTE /*where note.removeTime==null*/")
     @Query("SELECT * FROM NOTE")
-    fun getAll(): List<Note>
+    suspend  fun getAll(): List<Note>
 
     @Query("Select * from NOTE where id=:idNote")
-    fun getById(idNote: Long): Note
+    suspend fun getById(idNote: Long): Note
 
     @Update
-    fun update(note: NoteEntity)
+    suspend   fun update(note: NoteEntity)
 
     @Delete
-    fun deleteNote(note: NoteEntity)
-    //    fun getAll(): LiveData<List<Note>>
+    suspend   fun deleteNote(note: NoteEntity)
 
-/*    @Query("Select * from NOTE where id=:idNote")
-    fun getById(idNote:Long): List<NoteEntity>*/
+/*  @Query("UPDATE NOTE SET REMOVETIME = @System.currentTimeMillis() where id = idNote")
+   suspend   fun logicDelete(idNote: Long)*/
+   //    fun getAll(): LiveData<List<Note>>
+
+/*  @Query("Select * from NOTE where id=:idNote")
+   fun getById(idNote:Long): List<NoteEntity>*/
 
 
 }
