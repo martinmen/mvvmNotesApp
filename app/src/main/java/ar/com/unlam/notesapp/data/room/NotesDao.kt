@@ -23,11 +23,11 @@ interface NotesDao {
     @Delete
     suspend   fun deleteNote(note: NoteEntity)
 
-/*  @Query("UPDATE NOTE SET REMOVETIME = @System.currentTimeMillis() where id = idNote")
-   suspend   fun logicDelete(idNote: Long)*/
+/*  @Query("UPDATE NOTE SET REMOVETIME = :time where id = :idNote")
+   suspend   fun logicDelete(idNote: Long, time: Long = System.currentTimeMillis())
    //    fun getAll(): LiveData<List<Note>>
 
-/*  @Query("Select * from NOTE where id=:idNote")
+  @Query("Select * from NOTE where id=:idNote")
    fun getById(idNote:Long): List<NoteEntity>*/
 
 

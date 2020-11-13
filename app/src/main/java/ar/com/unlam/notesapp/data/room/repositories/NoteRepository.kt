@@ -1,4 +1,6 @@
-package ar.com.unlam.notesapp.domain.model
+package ar.com.unlam.notesapp.data.room.repositories
+
+import ar.com.unlam.notesapp.domain.model.Note
 
 interface NoteRepository {
 
@@ -12,5 +14,5 @@ interface NoteRepository {
 
    suspend fun deleteNote(nota: Note)
 
-   suspend   fun logicDelete(idNote: Long)
+   suspend  fun logicDelete(idNote: Long)
 }

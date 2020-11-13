@@ -1,6 +1,6 @@
 <resources>
     <string name="app_name">NotesApp</string>
-    <string name="add_weather_and_location">Add Weather and Location</string>
+    <string name="add_weather_and_location">Add Location</string>
     <string name="add_note">Save</string>
     <string name="add_photo">Add Photo</string>
     <string name="ingresar_comentario_nota">ingresar comentario nota</string>
@@ -9,4 +9,6 @@
     <string name="escriba_un_comentario_de_la_nota">Escriba un comentario de la nota</string>
     <string name="comentario">Comentario</string>
     <string name="nombre_nota">Nombre nota</string>
+    <string name="provincia">Provincia:</string>
+    <string name="munucipio">Munucipio:</string>
 </resources>

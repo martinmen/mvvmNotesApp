@@ -5,19 +5,19 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
-import androidx.activity.viewModels
 import androidx.lifecycle.Observer
 import ar.com.unlam.notesapp.R
 import ar.com.unlam.notesapp.databinding.ActivityDetailNoteBinding
 import ar.com.unlam.notesapp.ui.viewModels.DetailNoteViewModel
-import ar.com.unlam.notesapp.ui.viewModels.GeneralNoteViewModelFactory
+import org.koin.android.viewmodel.ext.android.viewModel
 
 class DetailNoteActivity : AppCompatActivity() {
 
-    val nameActivity = "DetailNoteActivity"
     private lateinit var binding: ActivityDetailNoteBinding
     var idNoteEditable: Long = 0
-    private val viewModel: DetailNoteViewModel by viewModels { GeneralNoteViewModelFactory(applicationContext,nameActivity) }
+    //private val viewModel: DetailNoteViewModel by viewModels { GeneralNoteViewModelFactory(applicationContext,nameActivity) } implementacion sin Koin
+    private val viewModel: DetailNoteViewModel by viewModel()
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -28,14 +28,18 @@ class DetailNoteActivity : AppCompatActivity() {
 
         val idNote = intent.getLongExtra("idNote", 0)
         idNoteEditable = idNote
-        //viewModel.getNoteById(idNote!!)
+        viewModel.getNoteById(idNoteEditable)
 
+        setObservers()
+
+    }
+
+    private fun setObservers() {
         viewModel.noteLiveData.observe(this, Observer {
             binding.texViewTituloNote.text = it.titulo
             binding.texViewComentarioNote.text = it.comentario
             var idNoteToEdit = it.id
         })
-
     }
 
     override fun onStart() {
@@ -56,9 +60,7 @@ class DetailNoteActivity : AppCompatActivity() {
                 val intent = Intent(this, AddNoteActivity::class.java)
                 intent.putExtra("idNote", idNoteEditable)
                 startActivity(intent)
-
             }
-
             R.id.item_delete_note -> {
                 viewModel.noteLiveData.removeObservers(this)
                 viewModel.deleteNote(viewModel.noteLiveData.value!!)
@@ -66,7 +68,6 @@ class DetailNoteActivity : AppCompatActivity() {
                 startActivity(intent)
             }
         }
-
         return super.onOptionsItemSelected(item)
     }
 

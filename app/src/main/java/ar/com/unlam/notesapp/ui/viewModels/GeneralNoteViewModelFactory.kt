@@ -1,15 +1,12 @@
 package ar.com.unlam.notesapp.ui.viewModels
 
 import android.content.Context
-import android.content.pm.PackageManager
-import android.widget.Switch
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.room.Room
 import ar.com.unlam.notesapp.data.room.NoteDataBase
 import ar.com.unlam.notesapp.data.room.NotesDao
-import ar.com.unlam.notesapp.data.room.RoomNoteRepository
-import kotlin.contracts.Returns
+import ar.com.unlam.notesapp.data.room.repositories.RoomNoteRepositoryImpl
 
 class GeneralNoteViewModelFactory(private val applicationContext: Context, activityName:String) : ViewModelProvider.Factory {
 private var globalName = activityName
@@ -29,13 +26,13 @@ private var globalName = activityName
 
     fun evaluateFactoryReturn(activityName: String,dao: NotesDao): ViewModel {
         return when (activityName) {
-            "AddNoteActivity" -> return AddNoteViewModel(RoomNoteRepository(dao))
+           // "AddNoteActivity" -> return AddNoteViewModel(RoomNoteRepositoryImpl(dao))
 
-            "DetailNoteActivity" -> return DetailNoteViewModel(RoomNoteRepository(dao))
+            "DetailNoteActivity" -> return DetailNoteViewModel(RoomNoteRepositoryImpl(dao))
 
-            "NoteActivity" -> return NoteViewModel(RoomNoteRepository(dao))
+            "NoteActivity" -> return NoteViewModel(RoomNoteRepositoryImpl(dao))
 
-            else ->  return NoteViewModel(RoomNoteRepository(dao))
+            else ->  return NoteViewModel(RoomNoteRepositoryImpl(dao))
         }
     }
 

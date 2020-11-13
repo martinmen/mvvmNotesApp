@@ -1,10 +1,10 @@
-package ar.com.unlam.notesapp.data.room
+package ar.com.unlam.notesapp.data.room.repositories
 
+import ar.com.unlam.notesapp.data.room.NotesDao
 import ar.com.unlam.notesapp.data.room.entities.NoteEntity
 import ar.com.unlam.notesapp.domain.model.Note
-import ar.com.unlam.notesapp.domain.model.NoteRepository
 
-class RoomNoteRepository(private val notesDao: NotesDao) : NoteRepository {
+class RoomNoteRepositoryImpl(private val notesDao: NotesDao) : NoteRepository {
 
     override suspend fun addNote(note: Note) {
         val entity = NoteEntity(
@@ -18,7 +18,7 @@ class RoomNoteRepository(private val notesDao: NotesDao) : NoteRepository {
     }
 
     override suspend fun getMyNotes(): List<Note> {
-        return notesDao.getAll().map { Note(it.id, it.titulo, it.comentario, it.creationTime ?: 0) }
+        return notesDao.getAll().map { Note(it.id, it.titulo, it.comentario,it.provincia?: "",it.municipio?: "" ,it.creationTime ?: 0) }
      //   return notesDao.getAll().map { Note(it.id, it.titulo, it.comentario, it.creationTime ?: 0,it.modifidedTime,it.removeTime) }
 
     }

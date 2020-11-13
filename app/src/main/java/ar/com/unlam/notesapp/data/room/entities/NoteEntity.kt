@@ -14,10 +14,12 @@ class NoteEntity (
 
     @ColumnInfo(name = "titulo")
     var titulo:String="",
-
     @ColumnInfo(name = "comentario")
     var comentario:String="",
-
+    @ColumnInfo(name = "provincia")
+    var provincia:String="",
+    @ColumnInfo(name = "municipio")
+    var municipio:String="",
     @ColumnInfo(name = "creationTime")
     val creationTime: Long?
 

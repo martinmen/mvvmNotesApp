@@ -40,7 +40,7 @@
         app:srcCompat="@drawable/empty_image" />
 
     <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/buttonAddWeatherLoc"
+        android:id="@+id/buttonAddLocation"
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:layout_above="@+id/buttonAddNote"
@@ -65,6 +65,30 @@
         android:layout_marginTop="16dp"
         android:layout_marginEnd="2dp"
         android:hint="@string/ingrese_titulo_de_la_nota" />
+
+    <androidx.appcompat.widget.AppCompatAutoCompleteTextView
+        android:id="@+id/textView_provincia"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/buttonAddLocation"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginStart="1dp"
+        android:layout_marginEnd="-2dp"
+        android:layout_marginBottom="103dp"
+        android:hint="@string/provincia" />
+
+    <androidx.appcompat.widget.AppCompatAutoCompleteTextView
+        android:id="@+id/textView_municiapio"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/buttonAddLocation"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginStart="1dp"
+        android:layout_marginEnd="-2dp"
+        android:layout_marginBottom="28dp"
+        android:hint="@string/munucipio" />
 
     <androidx.appcompat.widget.AppCompatEditText
         android:id="@+id/editText_comentario_nota"
