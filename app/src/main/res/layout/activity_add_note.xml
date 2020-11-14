@@ -66,7 +66,7 @@
         android:layout_marginEnd="2dp"
         android:hint="@string/ingrese_titulo_de_la_nota" />
 
-    <androidx.appcompat.widget.AppCompatAutoCompleteTextView
+    <androidx.appcompat.widget.AppCompatEditText
         android:id="@+id/textView_provincia"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -78,7 +78,7 @@
         android:layout_marginBottom="103dp"
         android:hint="@string/provincia" />
 
-    <androidx.appcompat.widget.AppCompatAutoCompleteTextView
+    <androidx.appcompat.widget.AppCompatEditText
         android:id="@+id/textView_municiapio"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

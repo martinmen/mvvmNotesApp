@@ -6,8 +6,7 @@ import retrofit2.Callback
 
 
 interface LocationRepository {
-    //fun getLoction(query: String, callback: (Location) -> Unit, onError: (Location) -> Unit)
 
-    fun getLocation(lat: String, lon:String)
+    fun getLocation(lat: String, lon: String, callback: (Location) -> Unit)
 
 }

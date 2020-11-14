@@ -10,7 +10,7 @@
         android:id="@+id/texView_titulo_note"
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:text="@string/ingrese_titulo_de_la_nota"
+        android:text="@string/titulo_de_la_nota"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
@@ -18,11 +18,12 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.0" />
 
+
     <TextView
         android:id="@+id/texView_comentario_note"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/escriba_un_comentario_de_la_nota"
+        android:layout_height="50dp"
+        android:text="@string/comentario_de_la_nota"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
@@ -31,6 +32,7 @@
         app:layout_constraintVertical_bias="0.0" />
 
     <ImageView
+        android:id="@+id/imageView"
         android:layout_width="match_parent"
         android:layout_height="300dp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -39,4 +41,28 @@
         app:layout_constraintTop_toBottomOf="@+id/texView_comentario_note"
         app:layout_constraintVertical_bias="0.041"
         app:srcCompat="@drawable/empty_image" />
+
+    <TextView
+        android:id="@+id/texView_provincia2"
+        android:layout_width="70dp"
+        android:layout_height="30dp"
+        android:text="@string/ubicaion"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageView"
+        app:layout_constraintVertical_bias="0.104" />
+
+    <TextView
+        android:id="@+id/texView_provincia"
+        android:layout_width="335dp"
+        android:layout_height="30dp"
+        app:layout_constraintBottom_toBottomOf="@+id/texView_provincia2"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toEndOf="@+id/texView_provincia2"
+        app:layout_constraintTop_toTopOf="@+id/texView_provincia2"
+        app:layout_constraintVertical_bias="0.0" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

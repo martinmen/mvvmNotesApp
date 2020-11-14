@@ -5,7 +5,7 @@ import retrofit2.Call
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
-class RetrofitLocationServiceImpl :RetrofitLocationService{
+class RetrofitLocationServiceImpl : RetrofitLocationService {
 
     private val service: LocationService = Retrofit.Builder()
         .baseUrl("https://apis.datos.gob.ar")
@@ -14,7 +14,7 @@ class RetrofitLocationServiceImpl :RetrofitLocationService{
         .create(LocationService::class.java)
 
     override fun getLocation(lat: String, lon: String): Call<Location> {
-        return service.getLocation(lat,lon)
+        return service.getLocation(lat, lon)
     }
 
 

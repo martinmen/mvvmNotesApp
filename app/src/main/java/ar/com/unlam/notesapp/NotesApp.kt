@@ -26,20 +26,18 @@ import org.koin.dsl.module
 class NotesApp : Application() {
 
     val appModule = module {
-        single<NotesDao> {dataBaseProvider(get()).noteDao()}
+        single<NotesDao> { dataBaseProvider(get()).noteDao() }
         single<NoteRepository> { RoomNoteRepositoryImpl(get()) }
 
-        single<LocationRepository> {LocationRepositoryImpl(get())  }
-        single<RetrofitLocationService> {RetrofitLocationServiceImpl() }
-    /*    single {
-            NoteAdapter { note ->
-                toOnItemViewClick(get())
-            }
-        }*/
-        viewModel { NoteViewModel(get())}
-        viewModel { AddNoteViewModel(get(),get())}
-        viewModel { DetailNoteViewModel(get())}
+        single<LocationRepository> { LocationRepositoryImpl(get()) }
+        single<RetrofitLocationService> { RetrofitLocationServiceImpl() }
+
+        /*    single { NoteAdapter { note -> toOnItemViewClick(get()) } }*/
+        viewModel { NoteViewModel(get()) }
+        viewModel { AddNoteViewModel(get(), get()) }
+        viewModel { DetailNoteViewModel(get()) }
     }
+
     override fun onCreate() {
         super.onCreate()
         startKoin {
@@ -48,31 +46,30 @@ class NotesApp : Application() {
             androidContext(this@NotesApp)
             koin.loadModules(listOf(appModule))
             koin.createRootScope()
-           // modules(appModule)
+            // modules(appModule) de esta manera me lanza un error.
         }
     }
 
-    private fun toOnItemViewClick(note: Note) {
-        val intent = Intent(this, DetailNoteActivity::class.java)
-        intent.putExtra("idNote", note.id)
-        startActivity(intent)
+    fun dataBaseProvider(context: Context): NoteDataBase {
+
+        return Room.databaseBuilder(context, NoteDataBase::class.java, "notes-db2").build()
     }
-
-    fun dataBaseProvider(context: Context):NoteDataBase{
-
-        return Room.databaseBuilder(context, NoteDataBase::class.java,"notes-db2").build()
-    }
-
-    /*fun database(context: Context):NotesDao{
-        val database = Room.databaseBuilder(
-            applicationContext,
-            NoteDataBase::class.java,
-            "notes-db"
-        )
-            //.allowMainThreadQueries() NO HACER. PAra esto estan las CORUTINES
-            .build()
-        val dao = database.noteDao()
-        return dao
-    }*/
-
 }
+/*  private fun toOnItemViewClick(note: Note) {
+    val intent = Intent(this, DetailNoteActivity::class.java)
+    intent.putExtra("idNote", note.id)
+    startActivity(intent)
+}
+
+fun database(context: Context):NotesDao{
+    val database = Room.databaseBuilder(
+        applicationContext,
+        NoteDataBase::class.java,
+        "notes-db"
+    )
+        //.allowMainThreadQueries() NO HACER. PAra esto estan las CORUTINES
+        .build()
+    val dao = database.noteDao()
+    return dao
+}*/
+

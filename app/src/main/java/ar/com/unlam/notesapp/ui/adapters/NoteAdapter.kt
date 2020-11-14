@@ -12,9 +12,9 @@ import com.google.android.material.snackbar.Snackbar
 //class NoteAdapter (val noteList:List<Note>): RecyclerView.Adapter<NoteAdapter.NoteHolder>(){
 class NoteAdapter(val onItemDetailViewClick: (note: Note) -> Unit) :
     RecyclerView.Adapter<NoteAdapter.NoteHolder>() {
-//lateinit var NoteitemRemoved : Note
+    //lateinit var NoteitemRemoved : Note
     var titleNoteDeleted = ""
-    var idNoteDeleted : Long = 0
+    var idNoteDeleted: Long = 0
     private val noteList = mutableListOf<Note>()
 
     class NoteHolder(private val binding: NoteItemBinding) : RecyclerView.ViewHolder(binding.root) {
@@ -22,6 +22,7 @@ class NoteAdapter(val onItemDetailViewClick: (note: Note) -> Unit) :
         fun binNote(note: Note) {
             binding.etNombreNote.text = note.titulo
             binding.etCommentNote.text = note.comentario
+            binding.etLocationNote.text = note.provincia
         }
 
     }
@@ -47,20 +48,22 @@ class NoteAdapter(val onItemDetailViewClick: (note: Note) -> Unit) :
         noteList.addAll(it)
     }
 
-    fun deleteItem( position: Int,viewHolder: RecyclerView.ViewHolder){
+    fun deleteItem(position: Int, viewHolder: RecyclerView.ViewHolder) {
         noteList.removeAt(position)
         notifyItemRemoved(position)
         idNoteDeleted = noteList[position].id
         titleNoteDeleted = noteList[position].titulo
 
 
-        Snackbar.make(viewHolder.itemView, "${titleNoteDeleted} removed", Snackbar.LENGTH_LONG).setAction("UNDO") {
-           returnNoteDelete()
+        Snackbar.make(viewHolder.itemView, "${titleNoteDeleted} removed", Snackbar.LENGTH_LONG)
+            .setAction("UNDO") {
+                returnNoteDelete()
 
-        }.show()
+            }.show()
 
     }
-    fun returnNoteDelete(): String{
+
+    fun returnNoteDelete(): String {
         return titleNoteDeleted
     }
 

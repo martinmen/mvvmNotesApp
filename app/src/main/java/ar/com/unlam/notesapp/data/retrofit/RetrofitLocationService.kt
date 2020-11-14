@@ -5,6 +5,6 @@ import retrofit2.Call
 
 interface RetrofitLocationService {
 
-    fun getLocation(lat: String,lon:String): Call<Location>
+    fun getLocation(lat: String, lon: String): Call<Location>
 
 }

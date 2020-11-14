@@ -8,5 +8,8 @@ import retrofit2.http.QueryMap
 
 interface LocationService {
     @GET("georef/api/ubicacion?")
-     fun getLocation(@Query(value = "lat") lat: String,@Query(value = "lon") lon:String): Call<Location>
+    fun getLocation(
+        @Query(value = "lat") lat: String,
+        @Query(value = "lon") lon: String
+    ): Call<Location>
 }

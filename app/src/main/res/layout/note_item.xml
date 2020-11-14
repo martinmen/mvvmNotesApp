@@ -35,6 +35,26 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/et_nombre_note" />
 
+        <TextView
+            android:id="@+id/et_location_note"
+            android:layout_width="177dp"
+            android:layout_height="20dp"
+            app:layout_constraintBottom_toBottomOf="@+id/et_location"
+            app:layout_constraintStart_toEndOf="@+id/et_location"
+            app:layout_constraintTop_toTopOf="@+id/et_location"
+            app:layout_constraintVertical_bias="1.0" />
+
+
+        <TextView
+            android:id="@+id/et_location"
+            android:layout_width="72dp"
+            android:layout_height="20dp"
+            android:layout_marginStart="4dp"
+            android:layout_marginTop="20dp"
+            android:text="@string/item_location"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/et_comment_note" />
+
         <ImageView
             android:id="@+id/img_itemResult"
             android:layout_width="100dp"

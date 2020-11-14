@@ -26,7 +26,7 @@ private var globalName = activityName
 
     fun evaluateFactoryReturn(activityName: String,dao: NotesDao): ViewModel {
         return when (activityName) {
-           // "AddNoteActivity" -> return AddNoteViewModel(RoomNoteRepositoryImpl(dao))
+            //"AddNoteActivity" -> return AddNoteViewModel(RoomNoteRepositoryImpl(dao))
 
             "DetailNoteActivity" -> return DetailNoteViewModel(RoomNoteRepositoryImpl(dao))
 

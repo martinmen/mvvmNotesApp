@@ -10,14 +10,14 @@ import kotlinx.coroutines.launch
 //class DetailNoteViewModel (private val noteRepository: RoomNoteRepositoryImp) :BaseNoteViewModel(noteRepository) { implementacion sin Koin
 class DetailNoteViewModel(private val noteRepository: NoteRepository) : ViewModel() {
 
-     val noteLiveData = MutableLiveData<Note>()
+    val noteLiveData = MutableLiveData<Note>()
 
-     fun getNoteById(idNote: Long) {
-         viewModelScope.launch {noteLiveData.value = noteRepository.getNoteById(idNote)}
-        }
+    fun getNoteById(idNote: Long) {
+        viewModelScope.launch { noteLiveData.value = noteRepository.getNoteById(idNote) }
+    }
 
-     fun deleteNote(note: Note) {
+    fun deleteNote(note: Note) {
         viewModelScope.launch { noteRepository.deleteNote(note) }
-        }
+    }
 
 }

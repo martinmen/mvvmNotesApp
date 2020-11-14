@@ -11,4 +11,12 @@
     <string name="nombre_nota">Nombre nota</string>
     <string name="provincia">Provincia:</string>
     <string name="munucipio">Munucipio:</string>
+    <string name="titulo_de_la_nota">Titulo de la nota</string>
+    <string name="comentario_de_la_nota">Comentario de la nota</string>
+    <string name="provinciaDetail">Provincia</string>
+    <string name="municipiodetail">Municipio</string>
+    <string name="creationAt">, hora: </string>
+    <string name="commasSeparator">", "</string>
+    <string name="item_location">Ubicacion: </string>
+    <string name="ubicaion">Ubicaion:</string>
 </resources>
