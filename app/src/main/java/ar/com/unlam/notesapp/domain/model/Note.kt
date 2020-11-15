@@ -8,10 +8,9 @@ data class Note(
     var comentario: String,
     var provincia: String,
     var municipio: String,
-    val creationTime: Long = System.currentTimeMillis()
-
-    //val modifidedTime: Long?,
-    // val removeTime: Long?
+    val creationTime: Long = System.currentTimeMillis(),
+    val modifidedTime: Long? = null,
+    val removeTime: Long? = null
 ) {
 
 }

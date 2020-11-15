@@ -10,9 +10,9 @@ interface NoteRepository {
 
     suspend fun getNoteById(idNote: Long): Note
 
-    suspend fun updateNote(nota: Note)
+    suspend fun updateNote(note: Note)
 
-    suspend fun deleteNote(nota: Note)
+    suspend fun deleteNote(note: Note)
+    suspend fun undoDeleteNote(note: Note)
 
-    suspend fun logicDelete(idNote: Long)
 }

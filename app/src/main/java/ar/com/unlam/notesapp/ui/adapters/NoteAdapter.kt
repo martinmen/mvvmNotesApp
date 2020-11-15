@@ -48,19 +48,15 @@ class NoteAdapter(val onItemDetailViewClick: (note: Note) -> Unit) :
         noteList.addAll(it)
     }
 
-    fun deleteItem(position: Int, viewHolder: RecyclerView.ViewHolder) {
+    fun deleteItem(position: Int, viewHolder: RecyclerView.ViewHolder): Long {
         noteList.removeAt(position)
         notifyItemRemoved(position)
-        idNoteDeleted = noteList[position].id
-        titleNoteDeleted = noteList[position].titulo
+        if (position == 0) {
 
-
-        Snackbar.make(viewHolder.itemView, "${titleNoteDeleted} removed", Snackbar.LENGTH_LONG)
-            .setAction("UNDO") {
-                returnNoteDelete()
-
-            }.show()
-
+            return noteList[position].id
+        } else {
+            return (noteList[position-1].id)
+        }
     }
 
     fun returnNoteDelete(): String {

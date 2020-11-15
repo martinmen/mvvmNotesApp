@@ -10,8 +10,7 @@ interface NotesDao {
     @Insert
     suspend fun addNote(entity: NoteEntity)
 
-    //@Query("SELECT * FROM NOTE /*where note.removeTime==null*/")
-    @Query("SELECT * FROM NOTE")
+    @Query("SELECT * FROM NOTE where note.removeTime is null")
     suspend fun getAll(): List<Note>
 
     @Query("Select * from NOTE where id=:idNote")
@@ -20,11 +19,7 @@ interface NotesDao {
     @Update
     suspend fun update(note: NoteEntity)
 
-    @Delete
+    @Update
     suspend fun deleteNote(note: NoteEntity)
 
-/*  @Query("UPDATE NOTE SET REMOVETIME = :time where id = :idNote")
-   suspend   fun logicDelete(idNote: Long, time: Long = System.currentTimeMillis())
-   //    fun getAll(): LiveData<List<Note>>
-*/
 }

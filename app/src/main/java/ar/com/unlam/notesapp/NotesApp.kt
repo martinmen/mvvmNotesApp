@@ -52,7 +52,7 @@ class NotesApp : Application() {
 
     fun dataBaseProvider(context: Context): NoteDataBase {
 
-        return Room.databaseBuilder(context, NoteDataBase::class.java, "notes-db2").build()
+        return Room.databaseBuilder(context, NoteDataBase::class.java, "notes-db3").build()
     }
 }
 /*  private fun toOnItemViewClick(note: Note) {

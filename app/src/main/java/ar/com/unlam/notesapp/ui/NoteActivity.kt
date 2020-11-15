@@ -14,22 +14,18 @@ import ar.com.unlam.notesapp.databinding.ActivityMainBinding
 import ar.com.unlam.notesapp.domain.model.Note
 import ar.com.unlam.notesapp.ui.adapters.NoteAdapter
 import ar.com.unlam.notesapp.ui.viewModels.NoteViewModel
+import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.activity_main.*
 import org.koin.android.ext.android.inject
 import org.koin.android.viewmodel.ext.android.viewModel
 
 class NoteActivity : AppCompatActivity() {
-  //  val nameActivity = "NoteActivity"
-   /* private val viewModel by viewModels<NoteViewModel> {
-        GeneralNoteViewModelFactory(
-            applicationContext,
-            nameActivity
-        )
-    }*/
-   private lateinit var adapter: NoteAdapter
 
-   private val viewModel: NoteViewModel by viewModel()
-   // private val adapter : NoteAdapter by inject()
+    private lateinit var adapter: NoteAdapter
+
+    private val viewModel: NoteViewModel by viewModel()
+
+    // private val adapter : NoteAdapter by inject()
     private lateinit var binding: ActivityMainBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -65,10 +61,6 @@ class NoteActivity : AppCompatActivity() {
 
     private fun setObservers() {
         viewModel.notesListLiveData.observe(this, Observer {
-
-        })
-
-        viewModel.notesListLiveData.observe(this, Observer {
             adapter.submitList(it)
             adapter.notifyDataSetChanged()
         })
@@ -86,10 +78,16 @@ class NoteActivity : AppCompatActivity() {
             }
 
             override fun onSwiped(viewHolder: RecyclerView.ViewHolder, position: Int) {
-                adapter.deleteItem(viewHolder.adapterPosition, viewHolder)
-                //      viewModel.getNoteById(adapter.idNoteDeleted)
-                //        var noteDeleted : Note? = viewModel.noteLiveData.value
-                //          noteDeleted?.let { viewModel.deleteNote(it) }
+                var idNoteSwped = adapter.deleteItem(viewHolder.adapterPosition, viewHolder)
+                viewModel.getNoteById(idNoteSwped)
+                viewModel.noteLiveData.observe(this@NoteActivity, Observer {  viewModel.deleteNote(it)
+
+                    Snackbar.make(viewHolder.itemView, "${viewModel.noteLiveData.value?.titulo} removed", Snackbar.LENGTH_LONG)
+                        .setAction("UNDO") {
+                            viewModel.noteLiveData.observe(this@NoteActivity, Observer {  viewModel.undoDeleteNote(it)
+                        })
+                        }.show()
+                })
             }
         }
     }

@@ -14,7 +14,6 @@ import java.text.SimpleDateFormat
 import java.util.*
 
 class DetailNoteActivity : AppCompatActivity() {
-
     private lateinit var binding: ActivityDetailNoteBinding
     var idNoteEditable: Long = 0
     private val viewModel: DetailNoteViewModel by viewModel()

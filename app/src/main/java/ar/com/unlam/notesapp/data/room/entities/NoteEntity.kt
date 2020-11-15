@@ -21,11 +21,9 @@ class NoteEntity(
     @ColumnInfo(name = "municipio")
     var municipio: String = "",
     @ColumnInfo(name = "creationTime")
-    val creationTime: Long?
-
-    /*  @ColumnInfo(name = "modifidedTime")
-      val modifidedTime: Long?,
-
-      @ColumnInfo(name = "removeTime")
-      val removeTime: Long?*/
+    val creationTime: Long?,
+    @ColumnInfo(name = "modifidedTime")
+    val modifidedTime: Long?,
+    @ColumnInfo(name = "removeTime")
+    val removeTime: Long?
 )

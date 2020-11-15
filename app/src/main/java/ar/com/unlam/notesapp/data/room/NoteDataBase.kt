@@ -6,7 +6,7 @@ import ar.com.unlam.notesapp.data.room.entities.NoteEntity
 
 
 @Database(
-    version = 3,
+    version = 2,
     entities = [NoteEntity::class]
 )
 abstract class NoteDataBase : RoomDatabase() {
