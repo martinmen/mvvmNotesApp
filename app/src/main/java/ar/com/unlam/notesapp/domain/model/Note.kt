@@ -1,5 +1,7 @@
 package ar.com.unlam.notesapp.domain.model
 
+import android.graphics.Bitmap
+import android.net.Uri
 import androidx.room.ColumnInfo
 
 data class Note(
@@ -8,6 +10,7 @@ data class Note(
     var comentario: String,
     var provincia: String,
     var municipio: String,
+    val imagen: String?,
     val creationTime: Long = System.currentTimeMillis(),
     val modifidedTime: Long? = null,
     val removeTime: Long? = null

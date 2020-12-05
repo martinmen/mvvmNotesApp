@@ -23,7 +23,8 @@ class AddNoteViewModel(
                     titulo = note.titulo,
                     comentario = note.comentario,
                     provincia = note.provincia,
-                    municipio = note.municipio
+                    municipio = note.municipio,
+                    imagen = note.imagen
                 )
             )
         }
@@ -37,8 +38,8 @@ class AddNoteViewModel(
         viewModelScope.launch { noteRepository.updateNote(note) }
     }
 
-    fun getLocation(lat: String, lon: String,) {
-        locationRepository.getLocation(lat, lon,{ locationLiveData.postValue(it) })
+     fun getLocation(lat: String, lon: String,) {
+     viewModelScope.launch {   locationRepository.getLocation(lat, lon,{ locationLiveData.postValue(it) }) }
     }
 
     fun checkAddOrUpdate(idNote: Long?, note: Note?) {

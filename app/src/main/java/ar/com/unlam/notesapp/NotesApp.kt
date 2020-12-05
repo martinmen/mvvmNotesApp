@@ -46,30 +46,13 @@ class NotesApp : Application() {
             androidContext(this@NotesApp)
             koin.loadModules(listOf(appModule))
             koin.createRootScope()
-            // modules(appModule) de esta manera me lanza un error.
         }
     }
 
     fun dataBaseProvider(context: Context): NoteDataBase {
 
-        return Room.databaseBuilder(context, NoteDataBase::class.java, "notes-db3").build()
+        return Room.databaseBuilder(context, NoteDataBase::class.java, "notes-db9").build()
     }
 }
-/*  private fun toOnItemViewClick(note: Note) {
-    val intent = Intent(this, DetailNoteActivity::class.java)
-    intent.putExtra("idNote", note.id)
-    startActivity(intent)
-}
 
-fun database(context: Context):NotesDao{
-    val database = Room.databaseBuilder(
-        applicationContext,
-        NoteDataBase::class.java,
-        "notes-db"
-    )
-        //.allowMainThreadQueries() NO HACER. PAra esto estan las CORUTINES
-        .build()
-    val dao = database.noteDao()
-    return dao
-}*/
 

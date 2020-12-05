@@ -16,7 +16,6 @@ import ar.com.unlam.notesapp.ui.adapters.NoteAdapter
 import ar.com.unlam.notesapp.ui.viewModels.NoteViewModel
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.activity_main.*
-import org.koin.android.ext.android.inject
 import org.koin.android.viewmodel.ext.android.viewModel
 
 class NoteActivity : AppCompatActivity() {
@@ -31,6 +30,10 @@ class NoteActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
+        //////////////////////
+
+                /////////
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 

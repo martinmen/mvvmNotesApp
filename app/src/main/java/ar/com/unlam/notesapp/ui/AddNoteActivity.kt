@@ -1,32 +1,48 @@
 package ar.com.unlam.notesapp.ui
 
 import android.Manifest
+import android.annotation.SuppressLint
+import android.app.Activity
+import android.content.ActivityNotFoundException
+import android.content.ContentValues
+import android.content.Intent
 import android.content.pm.PackageManager
-import androidx.appcompat.app.AppCompatActivity
+import android.graphics.Bitmap
+import android.net.Uri
+import android.os.Build
 import android.os.Bundle
+import android.provider.MediaStore
 import android.widget.Toast
+import androidx.activity.result.ActivityResultLauncher
+import androidx.activity.result.contract.ActivityResultContracts
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
-import androidx.lifecycle.Observer
+import androidx.core.content.ContextCompat
 import ar.com.unlam.notesapp.R
 import ar.com.unlam.notesapp.databinding.ActivityAddNoteBinding
 import ar.com.unlam.notesapp.domain.model.Note
 import ar.com.unlam.notesapp.ui.viewModels.AddNoteViewModel
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
+import kotlinx.android.synthetic.main.activity_add_note.*
+import org.koin.android.ext.android.bind
 import org.koin.android.viewmodel.ext.android.viewModel
 
 
 class AddNoteActivity : AppCompatActivity() {
     private lateinit var fusedLocationProviderClient: FusedLocationProviderClient
     var idNota: Long? = null
+    private val viewModel: AddNoteViewModel by viewModel()
+    private lateinit var binding: ActivityAddNoteBinding
+    private val SELECT_ACTIVITY = 50
+    private var imageUri: Uri? = null
 
     companion object {
         private const val locationRequestCode = 1000
+        const val NOTE_ID = "idNote"
+        const val REQUEST_GALLERY = 1001
+        const val REQUEST_CAMARA = 1002
     }
-
-    private val viewModel: AddNoteViewModel by viewModel()
-    private lateinit var binding: ActivityAddNoteBinding
-    /*  //Implementacion sin Koin //  private val viewModel: AddNoteViewModel by viewModels { GeneralNoteViewModelFactory(applicationContext, nameActivity ) }*/
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -34,33 +50,37 @@ class AddNoteActivity : AppCompatActivity() {
         binding = ActivityAddNoteBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        if (intent.hasExtra("idNote")) {
-            var idNote = intent.getLongExtra("idNote", 0)
-            viewModel.getNoteById(idNote!!)
-            viewModel.noteLiveData.observe(this, Observer {
+
+        setObservers()
+        setListeners()
+        handleIntent()
+
+
+    }
+
+    private fun handleIntent() {
+
+        if (intent.hasExtra(NOTE_ID)) {
+            var idNote = intent.getLongExtra(NOTE_ID, 0)
+            viewModel.getNoteById(idNote)
+            viewModel.noteLiveData.observe(this, {
                 binding.editTextTituloNota.setText(it.titulo)
                 binding.editTextComentarioNota.setText(it.comentario)
                 idNota = it.id
             })
         }
-
-        setObservers()
-
-        setListeners()
     }
 
     private fun setObservers() {
-        viewModel.locationLiveData.observe(this, Observer {
+        viewModel.locationLiveData.observe(this, {
             onLocationChange(it.ubicacion.provincia.nombre, it.ubicacion.municipio.nombre)
         })
+
+
     }
 
-    override fun onStart() {
-        super.onStart()
-    }
 
     private fun setListeners() {
-        //Agregar ubicacion obtiene lat y long y hace llamado a la api para obtener Provincia y municipio
         binding.buttonAddLocation.setOnClickListener {
             fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this)
             checkForPermission()
@@ -75,13 +95,110 @@ class AddNoteActivity : AppCompatActivity() {
                     titulo = binding.editTextTituloNota.text.toString(),
                     comentario = binding.editTextComentarioNota.text.toString(),
                     provincia = binding.textViewProvincia.text.toString(),
-                    municipio = binding.textViewMuniciapio.text.toString()
+                    municipio = binding.textViewMuniciapio.text.toString(),
+                    imagen = imageUri.toString()
+
+                    //    imagen = imageUri.toString()
                 )
                 viewModel.checkAddOrUpdate(idNota, note)
                 this@AddNoteActivity.finish()
 
             }
         }
+
+        binding.buttonAddImagGallery.setOnClickListener {
+            // ImageController.selectPhotoFromGallery(this, SELECT_ACTIVITY)
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                //Preguntar si tiene permisos
+                if (checkSelfPermission(Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_DENIED) {//Pedir permisos
+                    val permisosArchivos = arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE)
+                    requestPermissions(permisosArchivos, REQUEST_GALLERY)
+                } else {
+                    //entonces si tiene permisos
+                    openGallery()
+                }
+            } else {
+                //tiene version lollypop hacia abajo y por default tiene permisos
+                openGallery()
+            }
+        }
+
+        binding.buttonAddImagCamara.setOnClickListener {
+            // ImageController.selectPhotoFromGallery(this, SELECT_ACTIVITY)
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                //Preguntar si tiene permisos
+                if (checkSelfPermission(Manifest.permission.CAMERA) == PackageManager.PERMISSION_DENIED ||
+                    checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_DENIED
+                ) {//Pedir permisos
+                    val permisosArchivos = arrayOf(
+                        Manifest.permission.WRITE_EXTERNAL_STORAGE,
+                        Manifest.permission.CAMERA
+                    )
+                    requestPermissions(permisosArchivos, REQUEST_CAMARA)
+                } else {
+                    //entonces si tiene permisos
+                    openCamara()
+                }
+            } else {
+                //tiene version lollypop hacia abajo y por default tiene permisos
+                openCamara()
+            }
+
+        }
+    }
+
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<out String>,
+        grantResults: IntArray
+    ) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        when (requestCode) {
+            REQUEST_GALLERY -> {
+                if (grantResults[0] == PackageManager.PERMISSION_GRANTED)
+                    openGallery()
+                else
+                    Toast.makeText(
+                        applicationContext,
+                        "No podes acceder sin permisos a la galeria",
+                        Toast.LENGTH_SHORT
+                    ).show()
+            }
+            REQUEST_CAMARA -> {
+                if (grantResults[0] == PackageManager.PERMISSION_GRANTED)
+                    openCamara()
+                else
+                    Toast.makeText(
+                        applicationContext,
+                        "Debes dar permisos para utilizar la camara",
+                        Toast.LENGTH_SHORT
+                    ).show()
+            }
+        }
+    }
+
+    private fun openGallery() {
+        val intentGaleria = Intent(Intent.ACTION_PICK)
+        intentGaleria.type = "image/*"
+        //
+        val value = ContentValues()
+        value.put(MediaStore.Images.Media.TITLE, "Nueva imagen")
+        imageUri = contentResolver.insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, value)
+        val camaraIntent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
+        camaraIntent.putExtra(MediaStore.EXTRA_OUTPUT, imageUri)
+       //
+        startActivityForResult(intentGaleria, REQUEST_GALLERY)
+    }
+
+    private fun openCamara() {
+        //ConentValues es como un manejador de contenidos. Se suele utilizar en BD. Crea un espaciode memoria vacia en el que
+        //vamos a poner los bits de la foto
+        val value = ContentValues()
+        value.put(MediaStore.Images.Media.TITLE, "Nueva imagen")
+        imageUri = contentResolver.insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, value)
+        val camaraIntent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
+        camaraIntent.putExtra(MediaStore.EXTRA_OUTPUT, imageUri)
+        startActivityForResult(camaraIntent, REQUEST_CAMARA)
     }
 
     private fun onLocationChange(prov: String, muni: String) {
@@ -111,6 +228,7 @@ class AddNoteActivity : AppCompatActivity() {
         }
     }
 
+    @SuppressLint("MissingPermission")
     fun getLatitudLongitud() {
         fusedLocationProviderClient.lastLocation.addOnSuccessListener(this) { location ->
             if (location != null) {
@@ -121,21 +239,27 @@ class AddNoteActivity : AppCompatActivity() {
         }
     }
 
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        when (requestCode) {
+            SELECT_ACTIVITY -> {
+                resultCode == Activity.RESULT_OK
+                // imageUri = data!!.data
+                // AddImage.setImageURI(imageUri)
+            }
+            REQUEST_GALLERY -> {
+                if (resultCode == Activity.RESULT_OK) {
 
-/* private fun getExtras(): Long? {
-     var idNota1 :Long = 0
-     if (intent.hasExtra("idNote")) {
-         var idNote = intent.getLongExtra("idNote", 0)
-         viewModel.getNoteById(idNote)
-         viewModel.noteLiveData.observe(this, Observer {
-             binding.editTextTituloNota.setText(it.titulo)
-             binding.editTextComentarioNota.setText(it.comentario)
-            var idNota1 = it.id
-         })
-         return idNota1
-     }
-     return idNota1
- }*/
+                    binding.AddImage.setImageURI(data?.data)
+                }
+            }
+            REQUEST_CAMARA -> {
+                if (resultCode == Activity.RESULT_OK) {
+                    binding.AddImage.setImageURI(imageUri)
+                }
+            }
+
+        }
+    }
+
 }
-
-

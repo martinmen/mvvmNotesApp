@@ -12,6 +12,7 @@ class RoomNoteRepositoryImpl(private val notesDao: NotesDao) : NoteRepository {
             comentario = note.comentario,
             provincia = note.provincia,
             municipio = note.municipio,
+            imagen = note.imagen,
             creationTime = note.creationTime,
             modifidedTime = note.creationTime,
             removeTime = null
@@ -27,13 +28,12 @@ class RoomNoteRepositoryImpl(private val notesDao: NotesDao) : NoteRepository {
                 it.comentario,
                 it.provincia ?: "",
                 it.municipio ?: "",
+                it.imagen,
                 it.creationTime ?: 0,
                 it.modifidedTime ?: 0,
                 it.removeTime ?: 0
             )
         }
-        //   return notesDao.getAll().map { Note(it.id, it.titulo, it.comentario, it.creationTime ?: 0,it.modifidedTime,it.removeTime) }
-
     }
 
     override suspend fun getNoteById(idNote: Long): Note {
@@ -47,6 +47,7 @@ class RoomNoteRepositoryImpl(private val notesDao: NotesDao) : NoteRepository {
             comentario = note.comentario,
             provincia = note.provincia,
             municipio = note.municipio,
+            imagen = note.imagen,
             creationTime = note.creationTime,
             modifidedTime = System.currentTimeMillis(),
             removeTime = null
@@ -59,6 +60,9 @@ class RoomNoteRepositoryImpl(private val notesDao: NotesDao) : NoteRepository {
             id = note.id,
             titulo = note.titulo,
             comentario = note.comentario,
+            provincia = note.provincia,
+            municipio = note.municipio,
+            imagen = note.imagen,
             creationTime = note.creationTime,
             modifidedTime = note.modifidedTime,
             removeTime = System.currentTimeMillis()
@@ -71,6 +75,9 @@ class RoomNoteRepositoryImpl(private val notesDao: NotesDao) : NoteRepository {
             id = note.id,
             titulo = note.titulo,
             comentario = note.comentario,
+            provincia = note.provincia,
+            municipio = note.municipio,
+            imagen = note.imagen,
             creationTime = note.creationTime,
             modifidedTime = note.modifidedTime,
             removeTime = null

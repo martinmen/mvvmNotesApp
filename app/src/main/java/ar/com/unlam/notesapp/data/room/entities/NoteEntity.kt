@@ -1,5 +1,7 @@
 package ar.com.unlam.notesapp.data.room.entities
 
+import android.graphics.Bitmap
+import android.net.Uri
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
@@ -20,6 +22,8 @@ class NoteEntity(
     var provincia: String = "",
     @ColumnInfo(name = "municipio")
     var municipio: String = "",
+    @ColumnInfo(name = "imagen")
+    var imagen : String?,
     @ColumnInfo(name = "creationTime")
     val creationTime: Long?,
     @ColumnInfo(name = "modifidedTime")

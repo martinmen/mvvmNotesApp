@@ -19,4 +19,5 @@
     <string name="commasSeparator">", "</string>
     <string name="item_location">Ubicacion: </string>
     <string name="ubicaion">Ubicaion:</string>
+    <string name="permisosCamaraText">Se necesita permiso para lanzar la camara</string>
 </resources>

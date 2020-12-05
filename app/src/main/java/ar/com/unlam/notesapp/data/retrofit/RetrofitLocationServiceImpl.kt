@@ -16,6 +16,9 @@ class RetrofitLocationServiceImpl : RetrofitLocationService {
     override fun getLocation(lat: String, lon: String): Call<Location> {
         return service.getLocation(lat, lon)
     }
+    /*override suspend fun getLocation(lat: String, lon: String): Call<Location> {
+        return service.getLocation(lat, lon)
+    }*/
 
 
     /*override fun getLocation(term: String): Call<Location> {

@@ -9,15 +9,15 @@ import androidx.lifecycle.Observer
 import ar.com.unlam.notesapp.R
 import ar.com.unlam.notesapp.databinding.ActivityDetailNoteBinding
 import ar.com.unlam.notesapp.ui.viewModels.DetailNoteViewModel
+import ar.com.unlam.notesapp.utils.convertToTime
+import com.squareup.picasso.Picasso
+import kotlinx.android.synthetic.main.activity_detail_note.*
 import org.koin.android.viewmodel.ext.android.viewModel
-import java.text.SimpleDateFormat
-import java.util.*
 
 class DetailNoteActivity : AppCompatActivity() {
     private lateinit var binding: ActivityDetailNoteBinding
     var idNoteEditable: Long = 0
     private val viewModel: DetailNoteViewModel by viewModel()
-    //private val viewModel: DetailNoteViewModel by viewModels { GeneralNoteViewModelFactory(applicationContext,nameActivity) } implementacion sin Koin
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -26,23 +26,29 @@ class DetailNoteActivity : AppCompatActivity() {
         binding = ActivityDetailNoteBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        val idNote = intent.getLongExtra("idNote", 0)
+        val idNote = intent.getLongExtra(NOTE_ID, 0)
         idNoteEditable = idNote
-        viewModel.getNoteById(idNoteEditable)
+
 
         setObservers()
+        viewModel.getNoteById(idNoteEditable)
+    }
 
+
+    companion object{
+        const val NOTE_ID = "idNote"
     }
 
     private fun setObservers() {
         viewModel.noteLiveData.observe(this, Observer {
             binding.texViewTituloNote.text = it.titulo
             binding.texViewComentarioNote.text = it.comentario
+            Picasso.get()
+                .load(it.imagen)
+                .into(binding.imageViewDetail)
             if (it.provincia != "") {
                 binding.texViewProvincia.text =
-                    it.provincia + getString(R.string.commasSeparator) + it.municipio + getString(R.string.creationAt) + convertLongToTime(
-                        it.creationTime
-                    )
+                    it.provincia + getString(R.string.commasSeparator) + it.municipio + getString(R.string.creationAt) + it.creationTime.convertToTime()
             }
 
             var idNoteToEdit = it.id
@@ -65,7 +71,7 @@ class DetailNoteActivity : AppCompatActivity() {
             R.id.item_edit_note -> {
 
                 val intent = Intent(this, AddNoteActivity::class.java)
-                intent.putExtra("idNote", idNoteEditable)
+                intent.putExtra(NOTE_ID, idNoteEditable)
                 startActivity(intent)
             }
             R.id.item_delete_note -> {
@@ -78,10 +84,6 @@ class DetailNoteActivity : AppCompatActivity() {
         return super.onOptionsItemSelected(item)
     }
 
-    fun convertLongToTime(time: Long): String {
-        val date = Date(time)
-        val format = SimpleDateFormat("yyyy.MM.dd HH:mm")
-        return format.format(date)
-    }
+
 
 }
