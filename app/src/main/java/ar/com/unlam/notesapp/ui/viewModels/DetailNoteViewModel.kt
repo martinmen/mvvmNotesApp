@@ -7,17 +7,34 @@ import ar.com.unlam.notesapp.data.room.repositories.NoteRepository
 import ar.com.unlam.notesapp.domain.model.Note
 import kotlinx.coroutines.launch
 
-//class DetailNoteViewModel (private val noteRepository: RoomNoteRepositoryImp) :BaseNoteViewModel(noteRepository) { implementacion sin Koin
 class DetailNoteViewModel(private val noteRepository: NoteRepository) : ViewModel() {
 
     val noteLiveData = MutableLiveData<Note>()
+    val status = MutableLiveData<Status>()
 
+    enum class Status {
+        SUCCES,
+        ERROR,
+    }
     fun getNoteById(idNote: Long) {
-        viewModelScope.launch { noteLiveData.value = noteRepository.getNoteById(idNote) }
+        try {
+            viewModelScope.launch { noteLiveData.value = noteRepository.getNoteById(idNote) }
+            status.value = Status.SUCCES
+        }catch (e:Exception){
+            status.value = Status.ERROR
+        }
     }
 
     fun deleteNote(note: Note) {
-        viewModelScope.launch { noteRepository.deleteNote(note) }
+        try {
+            viewModelScope.launch { noteRepository.deleteNote(note)
+                status.value = Status.SUCCES
+            }
+
+        }catch (e:Exception){
+            status.value = Status.ERROR
+        }
+
     }
 
 }

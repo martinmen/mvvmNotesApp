@@ -31,9 +31,6 @@ class NoteActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        //////////////////////
-
-                /////////
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
@@ -83,12 +80,18 @@ class NoteActivity : AppCompatActivity() {
             override fun onSwiped(viewHolder: RecyclerView.ViewHolder, position: Int) {
                 var idNoteSwped = adapter.deleteItem(viewHolder.adapterPosition, viewHolder)
                 viewModel.getNoteById(idNoteSwped)
-                viewModel.noteLiveData.observe(this@NoteActivity, Observer {  viewModel.deleteNote(it)
+                viewModel.noteLiveData.observe(this@NoteActivity, Observer {
+                    viewModel.deleteNote(it)
 
-                    Snackbar.make(viewHolder.itemView, "${viewModel.noteLiveData.value?.titulo} removed", Snackbar.LENGTH_LONG)
+                    Snackbar.make(
+                        viewHolder.itemView,
+                        "${viewModel.noteLiveData.value?.titulo} removed",
+                        Snackbar.LENGTH_LONG
+                    )
                         .setAction("UNDO") {
-                            viewModel.noteLiveData.observe(this@NoteActivity, Observer {  viewModel.undoDeleteNote(it)
-                        })
+                            viewModel.noteLiveData.observe(this@NoteActivity, Observer {
+                                viewModel.undoDeleteNote(it)
+                            })
                         }.show()
                 })
             }

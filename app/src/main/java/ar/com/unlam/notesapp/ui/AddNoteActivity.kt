@@ -18,6 +18,7 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import androidx.core.net.toUri
 import ar.com.unlam.notesapp.R
 import ar.com.unlam.notesapp.databinding.ActivityAddNoteBinding
 import ar.com.unlam.notesapp.domain.model.Note
@@ -49,13 +50,9 @@ class AddNoteActivity : AppCompatActivity() {
 
         binding = ActivityAddNoteBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
-
         setObservers()
         setListeners()
         handleIntent()
-
-
     }
 
     private fun handleIntent() {
@@ -66,6 +63,10 @@ class AddNoteActivity : AppCompatActivity() {
             viewModel.noteLiveData.observe(this, {
                 binding.editTextTituloNota.setText(it.titulo)
                 binding.editTextComentarioNota.setText(it.comentario)
+                binding.textViewMuniciapio.setText(it.municipio)
+                binding.textViewProvincia.setText(it.provincia)
+                imageUri = it.imagen?.toUri()
+                binding.AddImage.setImageURI(imageUri)
                 idNota = it.id
             })
         }
@@ -75,34 +76,26 @@ class AddNoteActivity : AppCompatActivity() {
         viewModel.locationLiveData.observe(this, {
             onLocationChange(it.ubicacion.provincia.nombre, it.ubicacion.municipio.nombre)
         })
-
-
     }
-
 
     private fun setListeners() {
         binding.buttonAddLocation.setOnClickListener {
             fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this)
             checkForPermission()
         }
-
         binding.buttonAddNote.setOnClickListener {
-            if (binding.editTextTituloNota.text.isNullOrEmpty()) {
-                Toast.makeText(this, getString(R.string.name_must_completed), Toast.LENGTH_LONG)
-                    .show()
-            } else {
-                val note = Note(
-                    titulo = binding.editTextTituloNota.text.toString(),
-                    comentario = binding.editTextComentarioNota.text.toString(),
-                    provincia = binding.textViewProvincia.text.toString(),
-                    municipio = binding.textViewMuniciapio.text.toString(),
-                    imagen = imageUri.toString()
-
-                    //    imagen = imageUri.toString()
-                )
+            val note = Note(
+                titulo = binding.editTextTituloNota.text.toString(),
+                comentario = binding.editTextComentarioNota.text.toString(),
+                provincia = binding.textViewProvincia.text.toString(),
+                municipio = binding.textViewMuniciapio.text.toString(),
+                imagen = imageUri.toString()
+            )
+            if (viewModel.verifyRequeried(note)) {
                 viewModel.checkAddOrUpdate(idNota, note)
                 this@AddNoteActivity.finish()
-
+            } else {
+                Toast.makeText(this, getString(R.string.ErrorTitleEmpty), Toast.LENGTH_SHORT).show()
             }
         }
 
@@ -122,7 +115,6 @@ class AddNoteActivity : AppCompatActivity() {
                 openGallery()
             }
         }
-
         binding.buttonAddImagCamara.setOnClickListener {
             // ImageController.selectPhotoFromGallery(this, SELECT_ACTIVITY)
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
@@ -143,7 +135,6 @@ class AddNoteActivity : AppCompatActivity() {
                 //tiene version lollypop hacia abajo y por default tiene permisos
                 openCamara()
             }
-
         }
     }
 
@@ -160,7 +151,7 @@ class AddNoteActivity : AppCompatActivity() {
                 else
                     Toast.makeText(
                         applicationContext,
-                        "No podes acceder sin permisos a la galeria",
+                        getString(R.string.noAccesWithOutPermissionCamara),
                         Toast.LENGTH_SHORT
                     ).show()
             }
@@ -170,7 +161,7 @@ class AddNoteActivity : AppCompatActivity() {
                 else
                     Toast.makeText(
                         applicationContext,
-                        "Debes dar permisos para utilizar la camara",
+                        getString(R.string.AllowPermissionToOpenCamara),
                         Toast.LENGTH_SHORT
                     ).show()
             }
@@ -186,7 +177,7 @@ class AddNoteActivity : AppCompatActivity() {
         imageUri = contentResolver.insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, value)
         val camaraIntent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
         camaraIntent.putExtra(MediaStore.EXTRA_OUTPUT, imageUri)
-       //
+        //
         startActivityForResult(intentGaleria, REQUEST_GALLERY)
     }
 

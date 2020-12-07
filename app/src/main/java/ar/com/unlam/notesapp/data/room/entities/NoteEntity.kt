@@ -5,6 +5,7 @@ import android.net.Uri
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import ar.com.unlam.notesapp.domain.model.Note
 
 
 @Entity(tableName = "note")
@@ -17,11 +18,11 @@ class NoteEntity(
     @ColumnInfo(name = "titulo")
     var titulo: String = "",
     @ColumnInfo(name = "comentario")
-    var comentario: String = "",
+    var comentario: String? = "",
     @ColumnInfo(name = "provincia")
-    var provincia: String = "",
+    var provincia: String? = "",
     @ColumnInfo(name = "municipio")
-    var municipio: String = "",
+    var municipio: String? = "",
     @ColumnInfo(name = "imagen")
     var imagen : String?,
     @ColumnInfo(name = "creationTime")
@@ -31,3 +32,4 @@ class NoteEntity(
     @ColumnInfo(name = "removeTime")
     val removeTime: Long?
 )
+

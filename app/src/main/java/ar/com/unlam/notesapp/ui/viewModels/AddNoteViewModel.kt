@@ -15,40 +15,107 @@ class AddNoteViewModel(
 ) : ViewModel() {
     val noteLiveData = MutableLiveData<Note>()
     val locationLiveData = MutableLiveData<Location>()
+    val status = MutableLiveData<Status>()
+    val routingActivity = MutableLiveData<Status>()
+
+    enum class Status {
+        SUCCES,
+        ERROR,
+        VALID,
+        NOT_VALID,
+        LOCATION_SUCCED,
+        LOCATION_ERROR,
+        TO_ADD_NOTE,
+        TO_UPDATE_NOTE
+    }
+
+    fun verifyRequeried(note: Note): Boolean {
+        if (note.titulo=="") {
+            status.value= Status.NOT_VALID
+            return false
+        }
+        else {
+            status.value = Status.VALID
+            return true
+        }
+
+    }
 
     fun addNote(note: Note) {
         viewModelScope.launch {
-            noteRepository.addNote(
-                Note(
-                    titulo = note.titulo,
-                    comentario = note.comentario,
-                    provincia = note.provincia,
-                    municipio = note.municipio,
-                    imagen = note.imagen
+            try {
+                noteRepository.addNote(
+                    Note(
+                        titulo = note.titulo,
+                        comentario = note.comentario,
+                        provincia = note.provincia,
+                        municipio = note.municipio,
+                        imagen = note.imagen
+                    )
                 )
-            )
+                status.value = Status.SUCCES
+            } catch (e: Exception) {
+                status.value = Status.ERROR
+            }
         }
     }
 
     fun getNoteById(idNote: Long) {
-        viewModelScope.launch { noteLiveData.value = noteRepository.getNoteById(idNote) }
+        viewModelScope.launch {
+            try {
+                noteLiveData.value = noteRepository.getNoteById(idNote)
+                status.value = Status.SUCCES
+            } catch (ignored: Exception) {
+                status.value = Status.ERROR
+            }
+        }
     }
 
     fun updateNote(note: Note) {
-        viewModelScope.launch { noteRepository.updateNote(note) }
+        viewModelScope.launch {
+            try {
+                noteRepository.updateNote(note)
+                status.value = Status.SUCCES
+            } catch (ignored: Exception) {
+                status.value = Status.ERROR
+            }
+        }
     }
 
-     fun getLocation(lat: String, lon: String,) {
-     viewModelScope.launch {   locationRepository.getLocation(lat, lon,{ locationLiveData.postValue(it) }) }
+    fun getLocation(lat: String, lon: String) {
+        viewModelScope.launch {
+
+            try {
+                locationRepository.getLocation(
+                    lat,
+                    lon,
+                    { locationLiveData.postValue(it) })
+                status.value = Status.LOCATION_SUCCED
+            } catch (ignored: Exception) {
+                status.value = Status.LOCATION_ERROR
+            }
+
+        }
     }
 
     fun checkAddOrUpdate(idNote: Long?, note: Note?) {
         if (idNote != null) {
             note!!.id = idNote
-            updateNote(note!!)
-        } else {
-            addNote(note!!)
-        }
+            routingActivity.value = Status.TO_UPDATE_NOTE
+            try {
+                updateNote(note)
+            } catch (ignored: Exception) {
+                status.value = Status.ERROR
+            }
 
+        } else {
+            routingActivity.value = Status.TO_ADD_NOTE
+            try {
+               addNote(note!!)
+            } catch (ignored: Exception) {
+                status.value = Status.ERROR
+            }
+
+        }
     }
 }

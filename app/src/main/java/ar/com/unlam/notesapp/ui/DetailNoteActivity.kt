@@ -34,7 +34,6 @@ class DetailNoteActivity : AppCompatActivity() {
         viewModel.getNoteById(idNoteEditable)
     }
 
-
     companion object{
         const val NOTE_ID = "idNote"
     }

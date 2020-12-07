@@ -51,7 +51,7 @@ class NotesApp : Application() {
 
     fun dataBaseProvider(context: Context): NoteDataBase {
 
-        return Room.databaseBuilder(context, NoteDataBase::class.java, "notes-db9").build()
+        return Room.databaseBuilder(context, NoteDataBase::class.java, "notes-db11").build()
     }
 }
 

@@ -20,4 +20,13 @@
     <string name="item_location">Ubicacion: </string>
     <string name="ubicaion">Ubicaion:</string>
     <string name="permisosCamaraText">Se necesita permiso para lanzar la camara</string>
+    <string name="error_update_throw">error al intentar actualizar la nota</string>
+    <string name="error_getById_throw">al obtener la nota por id</string>
+    <string name="error_getNotes_throw">error al obtener las notas</string>
+    <string name="error_insert_throw">al insertar una nota</string>
+    <string name="error_undodelete_throw">error al intentar revertir eliminar la nota</string>
+    <string name="error_delete_throw">error al intentar eliminar la nota</string>
+    <string name="ErrorTitleEmpty">El titulo no puede estar sin completar</string>
+    <string name="noAccesWithOutPermissionCamara">No podes acceder sin permisos a la galeria</string>
+    <string name="AllowPermissionToOpenCamara">Debes dar permisos para utilizar la camara</string>
 </resources>

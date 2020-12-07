@@ -11,7 +11,7 @@ interface NotesDao {
     suspend fun addNote(entity: NoteEntity)
 
     @Query("SELECT * FROM NOTE where note.removeTime is null")
-    suspend fun getAll(): List<Note>
+    suspend fun getAll(): List<NoteEntity>
 
     @Query("Select * from NOTE where id=:idNote")
     suspend fun getById(idNote: Long): Note
