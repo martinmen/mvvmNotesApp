@@ -209,7 +209,7 @@ class AddNoteViewModelTest {
 
     @ExperimentalCoroutinesApi
     @Test
-    fun `obtener nota por Id con exito getNoteById()`() {
+    fun `obtener nota por Id con exito getNoteById() y verificar campos`() {
         corutinesTestRule.testDispacher.runBlockingTest {
             instance = AddNoteViewModel(noteRepository, locationRepository)
             var nota = Note(
@@ -224,13 +224,15 @@ class AddNoteViewModelTest {
                 null
             )
             coEvery { noteRepository.getNoteById(nota.id) } returns nota
-                instance.noteLiveData.value = nota
-            assertThat(instance.noteLiveData.value?.id).isEqualTo(1)
+            instance.noteLiveData.value = nota
+
             instance.status.observeForever {
 
                 assertThat(it).isEqualTo(AddNoteViewModel.Status.SUCCES)
             }
-            instance.updateNote(nota)
+            instance.getNoteById(nota.id)
+            assertThat(instance.noteLiveData.value?.id).isEqualTo(1)
+            assertThat(instance.noteLiveData.value!!.comentario).isEqualTo(nota.comentario)
         }
     }
 
@@ -249,7 +251,6 @@ class AddNoteViewModelTest {
             instance.getNoteById(1)
         }
     }
-
 
 
     @ExperimentalCoroutinesApi
@@ -272,7 +273,7 @@ class AddNoteViewModelTest {
             instance.routingActivity.observeForever {
                 assertThat(it).isEqualTo(AddNoteViewModel.Status.TO_ADD_NOTE)
             }
-            instance.checkAddOrUpdate(null,nota)
+            instance.checkAddOrUpdate(null, nota)
         }
     }
 
@@ -296,7 +297,7 @@ class AddNoteViewModelTest {
             instance.routingActivity.observeForever {
                 assertThat(it).isEqualTo(AddNoteViewModel.Status.TO_UPDATE_NOTE)
             }
-            instance.checkAddOrUpdate(1,nota)
+            instance.checkAddOrUpdate(1, nota)
         }
     }
 

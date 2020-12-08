@@ -16,25 +16,29 @@ class DetailNoteViewModel(private val noteRepository: NoteRepository) : ViewMode
         SUCCES,
         ERROR,
     }
+
     fun getNoteById(idNote: Long) {
-        try {
-            viewModelScope.launch { noteLiveData.value = noteRepository.getNoteById(idNote) }
-            status.value = Status.SUCCES
-        }catch (e:Exception){
-            status.value = Status.ERROR
+
+        viewModelScope.launch {
+            try {
+                noteLiveData.value = noteRepository.getNoteById(idNote)
+                status.value = Status.SUCCES
+            } catch (e: Exception) {
+                status.value = Status.ERROR
+            }
         }
     }
 
     fun deleteNote(note: Note) {
-        try {
-            viewModelScope.launch { noteRepository.deleteNote(note)
+
+        viewModelScope.launch {
+            try {
+                noteRepository.deleteNote(note)
                 status.value = Status.SUCCES
+            } catch (e: Exception) {
+                status.value = Status.ERROR
             }
-
-        }catch (e:Exception){
-            status.value = Status.ERROR
         }
-
     }
 
 }

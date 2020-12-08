@@ -87,7 +87,6 @@ class DetailNoteViewModelTest {
                 Assertions.assertThat(it).isEqualTo(DetailNoteViewModel.Status.ERROR)
             }
             instance.deleteNote(nota)
-
         }
     }
 }

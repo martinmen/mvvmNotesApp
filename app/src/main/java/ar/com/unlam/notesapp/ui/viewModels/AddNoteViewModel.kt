@@ -30,11 +30,10 @@ class AddNoteViewModel(
     }
 
     fun verifyRequeried(note: Note): Boolean {
-        if (note.titulo=="") {
-            status.value= Status.NOT_VALID
+        if (note.titulo == "") {
+            status.value = Status.NOT_VALID
             return false
-        }
-        else {
+        } else {
             status.value = Status.VALID
             return true
         }
@@ -84,7 +83,6 @@ class AddNoteViewModel(
 
     fun getLocation(lat: String, lon: String) {
         viewModelScope.launch {
-
             try {
                 locationRepository.getLocation(
                     lat,
@@ -111,7 +109,7 @@ class AddNoteViewModel(
         } else {
             routingActivity.value = Status.TO_ADD_NOTE
             try {
-               addNote(note!!)
+                addNote(note!!)
             } catch (ignored: Exception) {
                 status.value = Status.ERROR
             }

@@ -12,22 +12,65 @@ class NoteViewModel(private val noteRepository: NoteRepository) : ViewModel() {
 
     val notesListLiveData = MutableLiveData<List<Note>>()
     val noteLiveData = MutableLiveData<Note>()
+    val status = MutableLiveData<Status>()
+
+    enum class Status {
+        SUCCES,
+        ERROR,
+    }
 
     init {
-        viewModelScope.launch { notesListLiveData.value = noteRepository.getMyNotes() }
+        viewModelScope.launch {
+            try {
+                notesListLiveData.value = noteRepository.getMyNotes()
+                status.value = Status.SUCCES
+            } catch (e: Exception) {
+                status.value = Status.ERROR
+            }
+        }
     }
 
     fun getNotes() {
-        viewModelScope.launch { notesListLiveData.value = noteRepository.getMyNotes() }
+        viewModelScope.launch {
+            try {
+                notesListLiveData.value = noteRepository.getMyNotes()
+                status.value = Status.SUCCES
+            } catch (e: Exception) {
+                status.value = Status.ERROR
+            }
+        }
     }
 
-    fun getNoteById(idNote: Long) { viewModelScope.launch { noteLiveData.value = noteRepository.getNoteById(idNote) }
+    fun getNoteById(idNote: Long) {
+        viewModelScope.launch {
+            try {
+                noteLiveData.value = noteRepository.getNoteById(idNote)
+                status.value = Status.SUCCES
+            } catch (e: Exception) {
+                status.value = Status.ERROR
+            }
+        }
     }
 
     fun deleteNote(note: Note) {
-        viewModelScope.launch { noteRepository.deleteNote(note) }
+        viewModelScope.launch {
+            try {
+                noteRepository.deleteNote(note)
+                status.value = Status.SUCCES
+            } catch (e: Exception) {
+                status.value = Status.ERROR
+            }
+        }
     }
+
     fun undoDeleteNote(note: Note) {
-        viewModelScope.launch { noteRepository.undoDeleteNote(note) }
+        viewModelScope.launch {
+            try {
+                noteRepository.undoDeleteNote(note)
+                status.value = Status.SUCCES
+            } catch (e: Exception) {
+                status.value = Status.ERROR
+            }
+        }
     }
 }

@@ -69,7 +69,7 @@ class RoomNoteRepositoryTest {
 
     @Test
     @ExperimentalCoroutinesApi
-    fun `crar nota`() {
+    fun `crear nota`() {
 
         runBlockingTest {
 
@@ -153,10 +153,6 @@ class RoomNoteRepositoryTest {
                 .hasMessage(R.string.error_update_throw.toString())
         }
     }
-
-
-
-
 
     @Test
     @ExperimentalCoroutinesApi
