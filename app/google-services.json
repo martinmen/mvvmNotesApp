@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "1094364842713",
+    "firebase_url": "https://prueba-proyecto-61fd2-default-rtdb.firebaseio.com",
+    "project_id": "prueba-proyecto-61fd2",
+    "storage_bucket": "prueba-proyecto-61fd2.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1094364842713:android:479c16faf3d502fd98ccc8",
+        "android_client_info": {
+          "package_name": "ar.com.unlam.notesapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1094364842713-21ro6qi3qev8tpqe223mn9u8c8ja8s02.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDFzAzS3jZZa-yRcMcdhhdaUDLoVElax1w"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1094364842713-21ro6qi3qev8tpqe223mn9u8c8ja8s02.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

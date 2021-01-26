@@ -3,21 +3,16 @@ package ar.com.unlam.notesapp.ui
 import android.Manifest
 import android.annotation.SuppressLint
 import android.app.Activity
-import android.content.ActivityNotFoundException
 import android.content.ContentValues
 import android.content.Intent
 import android.content.pm.PackageManager
-import android.graphics.Bitmap
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.provider.MediaStore
 import android.widget.Toast
-import androidx.activity.result.ActivityResultLauncher
-import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
-import androidx.core.content.ContextCompat
 import androidx.core.net.toUri
 import ar.com.unlam.notesapp.R
 import ar.com.unlam.notesapp.databinding.ActivityAddNoteBinding
@@ -25,12 +20,13 @@ import ar.com.unlam.notesapp.domain.model.Note
 import ar.com.unlam.notesapp.ui.viewModels.AddNoteViewModel
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
+import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.android.synthetic.main.activity_add_note.*
-import org.koin.android.ext.android.bind
 import org.koin.android.viewmodel.ext.android.viewModel
 
 
 class AddNoteActivity : AppCompatActivity() {
+    private val db = FirebaseFirestore.getInstance()
     private lateinit var fusedLocationProviderClient: FusedLocationProviderClient
     var idNota: Long? = null
     private val viewModel: AddNoteViewModel by viewModel()
@@ -84,6 +80,7 @@ class AddNoteActivity : AppCompatActivity() {
             checkForPermission()
         }
         binding.buttonAddNote.setOnClickListener {
+
             val note = Note(
                 titulo = binding.editTextTituloNota.text.toString(),
                 comentario = binding.editTextComentarioNota.text.toString(),
@@ -91,6 +88,10 @@ class AddNoteActivity : AppCompatActivity() {
                 municipio = binding.textViewMuniciapio.text.toString(),
                 imagen = imageUri.toString()
             )
+
+            db.collection("notas")
+                .add(note)
+
             if (viewModel.verifyRequeried(note)) {
                 viewModel.checkAddOrUpdate(idNota, note)
                 this@AddNoteActivity.finish()
